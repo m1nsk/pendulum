@@ -6,10 +6,9 @@ import com.minsk.pendulum.model.User;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static com.minsk.pendulum.model.AbstractBaseEntity.START_SEQ;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTestData {
     public static final int USER_ID = START_SEQ;

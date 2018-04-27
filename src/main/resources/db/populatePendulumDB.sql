@@ -16,15 +16,15 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
   ('ROLE_ADMIN', 100001);
 
-INSERT INTO devices (id, user_id, serial) VALUES
-  (100002, 100000, 1),
-  (100003, 100000, 2),
-  (100004, 100001, 3);
+INSERT INTO devices (user_id, serial) VALUES
+  (100000, 100002),
+  (100000, 100003),
+  (100001, 100004);
 
-INSERT INTO channels (id, user_id, current_message) VALUES
-  (100005, 100000, 1),
-  (100006, 100000, 2),
-  (100007, 100001, 3);
+INSERT INTO channels (user_id, current_message) VALUES
+  (100000, 1),
+  (100000, 2),
+  (100001, 3);
 
 INSERT INTO messages (id, message, channel_id, user_id) VALUES
   (100000, '{"key":"empty1"}', 100005, 100000),

@@ -17,6 +17,13 @@ public class Device extends AbstractBaseEntity {
     @NotNull
     private User user;
 
+    public Device() {
+    }
+
+    public Device(Integer id) {
+        super(id);
+    }
+
     public Device(int serial, @NotNull User user) {
         this.serial = serial;
         this.user = user;

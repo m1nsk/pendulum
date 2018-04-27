@@ -14,7 +14,7 @@ import java.util.List;
 import static com.minsk.pendulum.UserTestData.*;
 
 
-public abstract class UserServiceTest extends BaseServiceTest {
+public abstract class UserAbstractServiceTest extends BaseServiceTest {
 
     @Autowired
     protected UserService service;

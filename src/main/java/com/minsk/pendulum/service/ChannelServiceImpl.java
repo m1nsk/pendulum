@@ -1,6 +1,8 @@
 package com.minsk.pendulum.service;
 
 import com.minsk.pendulum.model.Channel;
+import com.minsk.pendulum.model.Message;
+import com.minsk.pendulum.model.User;
 import com.minsk.pendulum.repository.ChannelRepository;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,18 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public Channel update(Channel channel, int userId) {
+        return checkNotFoundWithId(repository.save(channel, userId), channel.getId());
+    }
+
+    @Override
+    public Channel changeOwner(Channel channel, int userId, User newUser) {
+        channel.setUser(newUser);
+        return checkNotFoundWithId(repository.save(channel, userId), channel.getId());
+    }
+
+    @Override
+    public Channel setNewMessage(Channel channel, int userId, Message message) {
+        channel.setMessage(message);
         return checkNotFoundWithId(repository.save(channel, userId), channel.getId());
     }
 

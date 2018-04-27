@@ -26,6 +26,13 @@ public class Channel extends AbstractBaseEntity {
             inverseJoinColumns = @JoinColumn(name = "device_id"))
     private Set<Device> devices;
 
+    public Channel() {
+    }
+
+    public Channel(Integer id) {
+        super(id);
+    }
+
     public Channel(Message message, @NotNull User user, Set<Message> messages, Set<Device> devices) {
         this.message = message;
         this.user = user;
