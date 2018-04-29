@@ -22,16 +22,16 @@ INSERT INTO devices (user_id, serial) VALUES
   (100001, 100004);
 
 INSERT INTO channels (user_id, current_message) VALUES
-  (100000, 1),
-  (100000, 2),
-  (100001, 3);
+  (100000, 100000),
+  (100000, 100001),
+  (100001, 100002);
 
-INSERT INTO messages (id, message, channel_id, user_id) VALUES
-  (100000, '{"key":"empty1"}', 100005, 100000),
-  (100001, '{"key":"empty2"}', 100006, 100001),
-  (100002, '{"key":"empty3"}', 100007, 100001),
-  (100003, '{"key":"empty4"}', 100005, 100000),
-  (100004, '{"key":"empty5"}', 100005, 100000);
+INSERT INTO messages (message, channel_id, user_id) VALUES
+  ('{"key":"empty1"}', 100005, 100000),
+  ('{"key":"empty2"}', 100006, 100000),
+  ('{"key":"empty3"}', 100007, 100000),
+  ('{"key":"empty4"}', 100005, 100001),
+  ('{"key":"empty5"}', 100005, 100001);
 
 INSERT INTO channel_device (channel_id, device_id) VALUES
   (100005, 100002),

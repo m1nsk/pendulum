@@ -6,9 +6,6 @@
 
     <import resource="spring-tools.xml"/>
 
-
-    <context:component-scan base-package="com.minsk.**.service"/>
-
-    <context:component-scan base-package="com.minsk.**.web"/>
+    <context:component-scan base-package="com.minsk.pendulum.**.service"/>
 
 </beans>

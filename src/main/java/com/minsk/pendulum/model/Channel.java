@@ -2,7 +2,7 @@ package com.minsk.pendulum.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "channels")
@@ -17,14 +17,14 @@ public class Channel extends AbstractBaseEntity {
     @NotNull
     private User user;
 
-    @OneToMany(mappedBy = "channel")
-    private Set<Message> messages;
+    @OneToMany(mappedBy = "channel", fetch = FetchType.LAZY)
+    private List<Message> messages;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "channel_device",
             joinColumns = @JoinColumn(name = "channel_id"),
             inverseJoinColumns = @JoinColumn(name = "device_id"))
-    private Set<Device> devices;
+    private List<Device> devices;
 
     public Channel() {
     }
@@ -33,14 +33,11 @@ public class Channel extends AbstractBaseEntity {
         super(id);
     }
 
-    public Channel(Message message, @NotNull User user, Set<Message> messages, Set<Device> devices) {
-        this.message = message;
+    public Channel(@NotNull User user) {
         this.user = user;
-        this.messages = messages;
-        this.devices = devices;
     }
 
-    public Channel(Integer id, Message message, @NotNull User user, Set<Message> messages, Set<Device> devices) {
+    public Channel(Integer id, Message message, @NotNull User user, List<Message> messages, List<Device> devices) {
         super(id);
         this.message = message;
         this.user = user;
@@ -64,28 +61,26 @@ public class Channel extends AbstractBaseEntity {
         this.message = message;
     }
 
-    public Set<Message> getMessages() {
+    public List<Message> getMessages() {
         return messages;
     }
 
-    public void setMessages(Set<Message> messages) {
+    public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
 
-    public Set<Device> getDevices() {
+    public List<Device> getDevices() {
         return devices;
     }
 
-    public void setDevices(Set<Device> devices) {
+    public void setDevices(List<Device> devices) {
         this.devices = devices;
     }
 
     @Override
     public String toString() {
         return "Channel{" +
-                "message=" + message +
                 ", user=" + user +
-                ", messages=" + messages +
                 ", devices=" + devices +
                 ", id=" + id +
                 '}';

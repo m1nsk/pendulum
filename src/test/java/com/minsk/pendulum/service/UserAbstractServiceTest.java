@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.minsk.pendulum.UserTestData.*;
+import static com.minsk.pendulum.EntityTestData.*;
 
 
 public abstract class UserAbstractServiceTest extends BaseServiceTest {

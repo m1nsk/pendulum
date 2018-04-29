@@ -1,7 +1,5 @@
 package com.minsk.pendulum.model;
 
-import com.minsk.pendulum.model.User;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -24,29 +22,28 @@ public class Message extends AbstractBaseMessageEntity {
     private User user;
 
     @Column(name = "date", nullable = false)
-    @NotNull
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
 
-    @ManyToMany(mappedBy = "devices")
-    private Set<Channel> channels;
+    public Message() {
+    }
 
-    public Message(String message, @NotNull Channel channel, @NotNull User user,
-                   @NotNull LocalDateTime date, Set<Channel> channels) {
+    public Message(Integer id) {
+        super(id);
+    }
+
+    public Message(String message, @NotNull Channel channel, @NotNull User user) {
         this.message = message;
         this.channel = channel;
         this.user = user;
-        this.date = date;
-        this.channels = channels;
     }
 
     public Message(Integer id, String message, @NotNull Channel channel,
-                   @NotNull User user, @NotNull LocalDateTime date, Set<Channel> channels) {
+                   @NotNull User user) {
         super(id);
         this.message = message;
         this.channel = channel;
         this.user = user;
         this.date = date;
-        this.channels = channels;
     }
 
     public String getMessage() {
@@ -81,14 +78,6 @@ public class Message extends AbstractBaseMessageEntity {
         this.date = date;
     }
 
-    public Set<Channel> getChannels() {
-        return channels;
-    }
-
-    public void setChannels(Set<Channel> channels) {
-        this.channels = channels;
-    }
-
     @Override
     public String toString() {
         return "Message{" +
@@ -96,7 +85,6 @@ public class Message extends AbstractBaseMessageEntity {
                 ", channel=" + channel +
                 ", user=" + user +
                 ", date=" + date +
-                ", channels=" + channels +
                 ", id=" + id +
                 '}';
     }

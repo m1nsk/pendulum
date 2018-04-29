@@ -6,8 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.minsk.pendulum.DeviceTestData.*;
-import static com.minsk.pendulum.UserTestData.ADMIN_ID;
-import static com.minsk.pendulum.UserTestData.USER_ID;
+import static com.minsk.pendulum.EntityTestData.*;
 
 public abstract class DeviceAbstractServiceTest extends BaseServiceTest {
 
@@ -28,7 +27,7 @@ public abstract class DeviceAbstractServiceTest extends BaseServiceTest {
 
     @Test
     public void create() throws Exception {
-        Device created = getCreated();
+        Device created = getDeviceCreated();
         service.create(created, USER_ID);
         assertMatch(service.getAll(USER_ID), created, DEVICE2, DEVICE1);
     }
@@ -47,7 +46,7 @@ public abstract class DeviceAbstractServiceTest extends BaseServiceTest {
 
     @Test
     public void update() throws Exception {
-        Device updated = getUpdated();
+        Device updated = getDeviceUpdated();
         service.update(updated, USER_ID);
         assertMatch(service.get(DEVICE1_ID, USER_ID), updated);
     }

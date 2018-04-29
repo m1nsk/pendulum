@@ -1,6 +1,6 @@
 package com.minsk.pendulum.repository.dataJpa;
 
-import com.minsk.pendulum.model.Channel;
+import com.minsk.pendulum.model.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,18 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public interface CrudChannelRepository extends JpaRepository<Channel, Integer> {
+public interface CrudMessageRepository extends JpaRepository<Message, Integer> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Channel c WHERE c.id=:id AND c.user.id=:userId")
+    @Query("DELETE FROM Message m WHERE m.id=:id AND m.user.id=:userId")
     int delete(@Param("id") int id, @Param("userId") int userId);
 
     @Override
     @Transactional
-    Channel save(Channel item);
+    Message save(Message item);
 
-    @Query("SELECT c FROM Channel c WHERE c.user.id=:userId order by c.id desc")
-    List<Channel> getAll(@Param("userId") int userId);
+    @Query("SELECT m FROM Message m WHERE m.user.id=:userId order by m.id desc")
+    List<Message> getAll(@Param("userId") int userId);
 }
 
