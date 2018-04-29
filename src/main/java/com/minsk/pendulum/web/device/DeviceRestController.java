@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = DeviceRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = DeviceRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class DeviceRestController extends AbstractDeviceRestController {
     public static final String REST_URL = "/rest/device";
 
@@ -19,26 +19,26 @@ public class DeviceRestController extends AbstractDeviceRestController {
     }
 
     @Override
-    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Device update(@RequestBody Device device, @PathVariable int id) {
         return super.update(device, id);
     }
 
     @Override
-    @DeleteMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable int id) throws NotFoundException {
         super.delete(id);
     }
 
     @Override
-    @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Device get(@PathVariable int id) throws NotFoundException {
         return super.get(id);
     }
 
     @Override
-    @GetMapping(value = "/all",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Device> getAll(int userId) {
-        return super.getAll(userId);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Device> getAll() {
+        return super.getAll();
     }
 }

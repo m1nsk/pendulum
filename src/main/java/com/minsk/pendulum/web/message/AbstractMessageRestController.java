@@ -30,7 +30,8 @@ public class AbstractMessageRestController {
         return service.get(id);
     }
 
-    public List<Message> getAll(int userId) {
+    public List<Message> getAll() {
+        int userId = AuthorizedUser.id();
         return service.getAll(userId);
     }
 }

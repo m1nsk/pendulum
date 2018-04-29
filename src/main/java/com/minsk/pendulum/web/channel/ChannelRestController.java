@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = ChannelRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = ChannelRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ChannelRestController extends AbstractChannelRestController {
     public static final String REST_URL = "/rest/channel";
 
@@ -20,26 +20,26 @@ public class ChannelRestController extends AbstractChannelRestController {
     }
 
     @Override
-    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Channel update(@RequestBody Channel channel, @PathVariable int id) {
         return super.update(channel, id);
     }
 
     @Override
-    @DeleteMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable int id) throws NotFoundException {
         super.delete(id);
     }
 
     @Override
-    @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Channel get(@PathVariable int id) throws NotFoundException {
         return super.get(id);
     }
 
     @Override
-    @GetMapping(value = "/all",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Channel> getAll(int userId) {
-        return super.getAll(userId);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Channel> getAll() {
+        return super.getAll();
     }
 }

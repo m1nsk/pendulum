@@ -9,31 +9,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = MessageRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = MessageRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class MessageRestController extends AbstractMessageRestController {
     public static final String REST_URL = "/rest/message";
 
     @Override
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Message create(@RequestBody Message message) {
         return super.create(message);
     }
 
     @Override
-    @DeleteMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable int id) throws NotFoundException {
         super.delete(id);
     }
 
     @Override
-    @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Message get(@PathVariable int id) throws NotFoundException {
         return super.get(id);
     }
 
     @Override
-    @GetMapping(value = "/all",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Message> getAll(int userId) {
-        return super.getAll(userId);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Message> getAll() {
+        return super.getAll();
     }
 }

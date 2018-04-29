@@ -38,7 +38,8 @@ public class AbstractDeviceRestController {
         return service.get(id, userId);
     }
 
-    public List<Device> getAll(int userId) {
+    public List<Device> getAll() {
+        int userId = AuthorizedUser.id();
         return service.getAll(userId);
     }
 }

@@ -38,7 +38,8 @@ public class AbstractChannelRestController {
         return service.get(id, userId);
     }
 
-    public List<Channel> getAll(int userId) {
+    public List<Channel> getAll() {
+        int userId = AuthorizedUser.id();
         return service.getAll(userId);
     }
 }

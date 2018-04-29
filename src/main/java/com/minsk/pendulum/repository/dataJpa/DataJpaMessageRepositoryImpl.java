@@ -1,7 +1,10 @@
 package com.minsk.pendulum.repository.dataJpa;
 
+import com.minsk.pendulum.model.Channel;
 import com.minsk.pendulum.model.Message;
+import com.minsk.pendulum.repository.ChannelRepository;
 import com.minsk.pendulum.repository.MessageRepository;
+import com.minsk.pendulum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,16 +18,25 @@ public class DataJpaMessageRepositoryImpl implements MessageRepository {
     private CrudMessageRepository crudMessageRepository;
 
     @Autowired
-    private CrudUserRepository crudUserRepository;
+    private UserRepository crudUserRepository;
+
+    @Autowired
+    private ChannelRepository dataJpaChannelRepository;
 
     @Override
     @Transactional
-    public Message save(Message device, int userId) {
-        if (!device.isNew()) {
+    public Message save(Message message, int userId) {
+        if (!message.isNew()) {
             return null;
         }
-        device.setUser(crudUserRepository.getOne(userId));
-        return crudMessageRepository.save(device);
+        Channel channel = message.getChannel();
+        if (dataJpaChannelRepository.get(channel.getId(), userId).getUser().getId() != userId) {
+            return null;
+        }
+        message.setUser(crudUserRepository.get(userId));
+        Message message_result = crudMessageRepository.save(message);
+        channel.setMessage(message_result);
+        return message;
     }
 
     @Override
