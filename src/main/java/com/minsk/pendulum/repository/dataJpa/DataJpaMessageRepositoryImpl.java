@@ -25,15 +25,16 @@ public class DataJpaMessageRepositoryImpl implements MessageRepository {
 
     @Override
     @Transactional
-    public Message save(Message message, int userId) {
+    public Message save(Message message, int userId, int channelId) {
         if (!message.isNew()) {
             return null;
         }
-        Channel channel = message.getChannel();
-        if (dataJpaChannelRepository.get(channel.getId(), userId).getUser().getId() != userId) {
+        Channel channel = dataJpaChannelRepository.get(channelId, userId);
+        if (channel == null) {
             return null;
         }
         message.setUser(crudUserRepository.get(userId));
+        message.setChannel(channel);
         Message message_result = crudMessageRepository.save(message);
         channel.setMessage(message_result);
         return message;

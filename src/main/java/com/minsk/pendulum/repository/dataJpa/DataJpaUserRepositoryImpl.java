@@ -5,6 +5,7 @@ import com.minsk.pendulum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,8 +17,15 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     private CrudUserRepository crudRepository;
 
     @Override
+    @Transactional
     public User save(User user) {
-        return crudRepository.save(user);
+        if (user.isNew()) {
+            return crudRepository.save(user);
+        } else {
+            User user_to_update = crudRepository.getOne(user.getId());
+            user_to_update.userUpdate(user);
+            return crudRepository.save(user_to_update);
+        }
     }
 
     @Override

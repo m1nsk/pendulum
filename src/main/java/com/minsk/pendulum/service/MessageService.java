@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MessageService {
 
-    Message create(Message message, int userId);
+    Message create(Message message, int userId, int channelId);
 
     void delete(int id, int userId) throws NotFoundException;
 

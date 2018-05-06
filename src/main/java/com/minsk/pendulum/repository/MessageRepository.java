@@ -5,7 +5,7 @@ import com.minsk.pendulum.model.Message;
 import java.util.List;
 
 public interface MessageRepository {
-    Message save(Message message, int userId);
+    Message save(Message message, int userId, int channelId);
 
     // false if not found
     boolean delete(int id, int userId);

@@ -33,6 +33,7 @@ CREATE TABLE user_roles
 CREATE TABLE devices
 (
   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  name        VARCHAR(64),
   user_id     INTEGER   NOT NULL,
   serial      INTEGER NOT NULL ,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
@@ -41,6 +42,7 @@ CREATE TABLE devices
 CREATE TABLE channels
 (
   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  name        VARCHAR(64),
   user_id     INTEGER   NOT NULL,
   current_message INTEGER,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE

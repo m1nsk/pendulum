@@ -1,12 +1,15 @@
 package com.minsk.pendulum.web.device;
 
 import com.minsk.pendulum.AuthorizedUser;
+import com.minsk.pendulum.DTO.device.DeviceDto;
+import com.minsk.pendulum.DTO.DtoUtils;
 import com.minsk.pendulum.model.Device;
 import com.minsk.pendulum.service.DeviceService;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.minsk.pendulum.util.ValidationUtil.assureIdConsistent;
 import static com.minsk.pendulum.util.ValidationUtil.checkNew;
@@ -16,16 +19,23 @@ public class AbstractDeviceRestController {
     @Autowired
     private DeviceService service;
 
-    public Device create(Device device) {
+    @Autowired
+    private DtoUtils dtoUtils;
+
+    public DeviceDto create(DeviceDto deviceDto) {
         int userId =AuthorizedUser.id();
+        Device device = dtoUtils.convertToEntity(deviceDto);
         checkNew(device);
-        return service.create(device, userId);
+        device = service.create(device, userId);
+        return dtoUtils.convertToDto(device);
     }
 
-    public Device update(Device device, int id) {
+    public DeviceDto update(DeviceDto deviceDto, int id) {
         int userId = AuthorizedUser.id();
+        Device device = dtoUtils.convertToEntity(deviceDto);
         assureIdConsistent(device, id);
-        return service.create(device, userId);
+        device = service.create(device, userId);
+        return dtoUtils.convertToDto(device);
     }
 
     public void delete(int id) throws NotFoundException {
@@ -33,13 +43,15 @@ public class AbstractDeviceRestController {
         service.delete(id, userId);
     }
 
-    public Device get(int id) throws NotFoundException {
+    public DeviceDto get(int id) throws NotFoundException {
         int userId = AuthorizedUser.id();
-        return service.get(id, userId);
+        return dtoUtils.convertToDto(service.get(id, userId));
     }
 
-    public List<Device> getAll() {
+    public List<DeviceDto> getAll() {
         int userId = AuthorizedUser.id();
-        return service.getAll(userId);
+        List<Device> devices = service.getAll(userId);
+        return devices.stream().map(device -> dtoUtils.convertToDto(device))
+                .collect(Collectors.toList());
     }
 }

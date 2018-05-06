@@ -1,18 +1,16 @@
 package com.minsk.pendulum.model;
 
-import com.minsk.pendulum.model.User;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "devices")
-public class Device extends AbstractBaseEntity {
+public class Device extends AbstractNamedEntity {
 
     @Column(name = "serial", nullable = false)
     private int serial;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
     private User user;
@@ -20,8 +18,8 @@ public class Device extends AbstractBaseEntity {
     public Device() {
     }
 
-    public Device(Integer id) {
-        super(id);
+    public Device(Integer id, String name) {
+        super(id, name);
     }
 
     public Device(int serial, @NotNull User user) {
@@ -29,8 +27,8 @@ public class Device extends AbstractBaseEntity {
         this.user = user;
     }
 
-    public Device(Integer id, int serial, @NotNull User user) {
-        super(id);
+    public Device(Integer id, String name, int serial, @NotNull User user) {
+        super(id, name);
         this.serial = serial;
         this.user = user;
     }

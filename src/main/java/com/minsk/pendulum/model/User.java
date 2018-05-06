@@ -59,6 +59,11 @@ public class User extends AbstractNamedEntity {
         setRoles(roles);
     }
 
+    public void userUpdate(User user) {
+        this.name = user.getName();
+        this.email = user.getEmail();
+    }
+
     public String getEmail() {
         return email;
     }

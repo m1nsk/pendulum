@@ -6,13 +6,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "channels")
-public class Channel extends AbstractBaseEntity {
+public class Channel extends AbstractNamedEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "current_message")
     private Message message;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
     private User user;
@@ -29,16 +29,16 @@ public class Channel extends AbstractBaseEntity {
     public Channel() {
     }
 
-    public Channel(Integer id) {
-        super(id);
+    public Channel(Integer id, String name) {
+        super(id, name);
     }
 
     public Channel(@NotNull User user) {
         this.user = user;
     }
 
-    public Channel(Integer id, Message message, @NotNull User user, List<Message> messages, List<Device> devices) {
-        super(id);
+    public Channel(Integer id, String name, Message message, @NotNull User user, List<Message> messages, List<Device> devices) {
+        super(id, name);
         this.message = message;
         this.user = user;
         this.messages = messages;

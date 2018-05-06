@@ -1,12 +1,15 @@
 package com.minsk.pendulum.web.channel;
 
 import com.minsk.pendulum.AuthorizedUser;
+import com.minsk.pendulum.DTO.channel.ChannelDto;
+import com.minsk.pendulum.DTO.DtoUtils;
 import com.minsk.pendulum.model.Channel;
 import com.minsk.pendulum.service.ChannelService;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.minsk.pendulum.util.ValidationUtil.assureIdConsistent;
 import static com.minsk.pendulum.util.ValidationUtil.checkNew;
@@ -16,16 +19,23 @@ public class AbstractChannelRestController {
     @Autowired
     private ChannelService service;
 
-    public Channel create(Channel channel) {
+    @Autowired
+    private DtoUtils dtoUtils;
+
+    public ChannelDto create(ChannelDto channelDto) {
         int userId =AuthorizedUser.id();
+        Channel channel = dtoUtils.convertToEntity(channelDto);
         checkNew(channel);
-        return service.create(channel, userId);
+        channel = service.create(channel, userId);
+        return dtoUtils.convertToDto(channel);
     }
 
-    public Channel update(Channel channel, int id) {
+    public ChannelDto update(ChannelDto channelDto, int id) {
         int userId = AuthorizedUser.id();
+        Channel channel = dtoUtils.convertToEntity(channelDto);
         assureIdConsistent(channel, id);
-        return service.create(channel, userId);
+        channel = service.create(channel, userId);
+        return dtoUtils.convertToDto(channel);
     }
 
     public void delete(int id) throws NotFoundException {
@@ -33,13 +43,15 @@ public class AbstractChannelRestController {
         service.delete(id, userId);
     }
 
-    public Channel get(int id) throws NotFoundException {
+    public ChannelDto get(int id) throws NotFoundException {
         int userId = AuthorizedUser.id();
-        return service.get(id, userId);
+        return dtoUtils.convertToDto(service.get(id, userId));
     }
 
-    public List<Channel> getAll() {
+    public List<ChannelDto> getAll() {
         int userId = AuthorizedUser.id();
-        return service.getAll(userId);
+        List<Channel> channels = service.getAll(userId);
+        return channels.stream().map(channel -> dtoUtils.convertToDto(channel))
+                .collect(Collectors.toList());
     }
 }

@@ -20,18 +20,18 @@ public class EntityTestData {
     public static final int DEVICE1_ID = START_SEQ + 2;
     public static final int ADMIN_DEVICE_ID = START_SEQ + 4;
 
-    public static final Device DEVICE1 = new Device(DEVICE1_ID, DEVICE1_ID, USER);
-    public static final Device DEVICE2 = new Device(DEVICE1_ID + 1, DEVICE1_ID + 1, USER);
-    public static final Device ADMIN_DEVICE1 = new Device(ADMIN_DEVICE_ID, ADMIN_DEVICE_ID, ADMIN);
+    public static final Device DEVICE1 = new Device(DEVICE1_ID, "1", DEVICE1_ID, USER);
+    public static final Device DEVICE2 = new Device(DEVICE1_ID + 1, "2", DEVICE1_ID + 1, USER);
+    public static final Device ADMIN_DEVICE1 = new Device(ADMIN_DEVICE_ID, "3", ADMIN_DEVICE_ID, ADMIN);
 
     public static final List<Device> DEVICES = Arrays.asList(DEVICE2, DEVICE1);
 
     public static final int CHANNEL1_ID = START_SEQ + 5;
     public static final int ADMIN_CHANNEL_ID = CHANNEL1_ID + 2;
 
-    public static final Channel CHANNEL1 = new Channel(CHANNEL1_ID , null, USER, null, null);
-    public static final Channel CHANNEL2 = new Channel(CHANNEL1_ID + 1 , null, USER, null, null);
-    public static final Channel ADMIN_CHANNEL1 = new Channel(ADMIN_CHANNEL_ID , null, ADMIN, null, null);
+    public static final Channel CHANNEL1 = new Channel(CHANNEL1_ID , "channel1", null, USER, null, null);
+    public static final Channel CHANNEL2 = new Channel(CHANNEL1_ID + 1, "channel2", null, USER, null, null);
+    public static final Channel ADMIN_CHANNEL1 = new Channel(ADMIN_CHANNEL_ID, "channel3", null, ADMIN, null, null);
 
     public static final List<Channel> CHANNELS = Arrays.asList(CHANNEL2, CHANNEL1);
 
@@ -57,11 +57,11 @@ public class EntityTestData {
     }
 
     public static Device getDeviceCreated() {
-        return new Device(null, 100100, USER);
+        return new Device(null, "4", 100100, USER);
     }
 
     public static Device getDeviceUpdated() {
-        return new Device(DEVICE1_ID, DEVICE1.getSerial() + 1,DEVICE1.getUser());
+        return new Device(DEVICE1_ID, "NEW",DEVICE1.getSerial() + 1,DEVICE1.getUser());
     }
 
     public static Channel getChannelCreated() {
@@ -69,7 +69,7 @@ public class EntityTestData {
     }
 
     public static Channel getChannelUpdated() {
-        return new Channel(CHANNEL1.getId(), CHANNEL1.getMessage(), CHANNEL1.getUser(), null, null);
+        return new Channel(CHANNEL1.getId(), "updated channel", CHANNEL1.getMessage(), CHANNEL1.getUser(), null, null);
     }
 
     public static Message getMessageCreated() {

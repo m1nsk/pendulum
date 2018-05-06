@@ -20,20 +20,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
-/*
-    public void setRepository(UserRepository repository) {
-        this.repository = repository;
-    }
-*/
-
-    @CacheEvict(value = "users", allEntries = true)
     @Override
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
         return repository.save(user);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Override
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(repository.delete(id), id);
@@ -50,13 +42,11 @@ public class UserServiceImpl implements UserService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
-    @Cacheable("users")
     @Override
     public List<User> getAll() {
         return repository.getAll();
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Override
     public void update(User user) {
         Assert.notNull(user, "user must not be null");

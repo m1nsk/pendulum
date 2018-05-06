@@ -22,9 +22,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message create(Message device, int userId) {
-        Assert.notNull(device, "Message must not be null");
-        return repository.save(device, userId);
+    public Message create(Message message, int userId, int channelId) {
+        Assert.notNull(message, "Message must not be null");
+        return repository.save(message, userId, channelId);
     }
 
     @Override

@@ -1,12 +1,16 @@
 package com.minsk.pendulum.web.user;
 
+import com.minsk.pendulum.DTO.DtoUtils;
+import com.minsk.pendulum.DTO.user.UserCreateDto;
+import com.minsk.pendulum.DTO.user.UserDto;
+import com.minsk.pendulum.model.User;
+import com.minsk.pendulum.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.minsk.pendulum.model.User;
-import com.minsk.pendulum.service.UserService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.minsk.pendulum.util.ValidationUtil.assureIdConsistent;
 import static com.minsk.pendulum.util.ValidationUtil.checkNew;
@@ -17,20 +21,27 @@ public abstract class AbstractUserController {
     @Autowired
     private UserService service;
 
-    public List<User> getAll() {
+    @Autowired
+    private DtoUtils dtoUtils;
+
+    public List<UserDto> getAll() {
         log.info("getAll");
-        return service.getAll();
+        List<User> users = service.getAll();
+        return users.stream().map(user -> dtoUtils.convertToDto(user)).collect(Collectors.toList());
     }
 
-    public User get(int id) {
+    public UserDto get(int id) {
         log.info("get {}", id);
-        return service.get(id);
+        UserDto userDto = dtoUtils.convertToDto(service.get(id));
+        return userDto;
     }
 
-    public User create(User user) {
-        log.info("create {}", user);
+    public UserDto create(UserCreateDto userCreateDto) {
+        log.info("create {}", userCreateDto);
+        User user = dtoUtils.convertToEntity(userCreateDto);
         checkNew(user);
-        return service.create(user);
+        user = service.create(user);
+        return dtoUtils.convertToDto(user);
     }
 
     public void delete(int id) {
@@ -38,14 +49,17 @@ public abstract class AbstractUserController {
         service.delete(id);
     }
 
-    public void update(User user, int id) {
-        log.info("update {} with id={}", user, id);
+    public void update(UserDto userDto, int id) {
+        log.info("update {} with id={}", userDto, id);
+        User user = dtoUtils.convertToEntity(userDto);
         assureIdConsistent(user, id);
         service.update(user);
     }
 
-    public User getByMail(String email) {
+    public UserDto getByMail(String email) {
         log.info("getByEmail {}", email);
-        return service.getByEmail(email);
+        User user = service.getByEmail(email);
+        return dtoUtils.convertToDto(user);
     }
+    
 }

@@ -1,11 +1,8 @@
 package com.minsk.pendulum.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "messages")
@@ -16,10 +13,9 @@ public class Message extends AbstractBaseMessageEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id", nullable = false)
     @NotNull
-    @JsonIgnore
     private Channel channel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
     private User user;
