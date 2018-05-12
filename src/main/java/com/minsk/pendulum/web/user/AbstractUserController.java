@@ -5,6 +5,7 @@ import com.minsk.pendulum.DTO.user.UserCreateDto;
 import com.minsk.pendulum.DTO.user.UserDto;
 import com.minsk.pendulum.model.User;
 import com.minsk.pendulum.service.UserService;
+import com.minsk.pendulum.web.AbstractSecurityController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 import static com.minsk.pendulum.util.ValidationUtil.assureIdConsistent;
 import static com.minsk.pendulum.util.ValidationUtil.checkNew;
 
-public abstract class AbstractUserController {
+public abstract class AbstractUserController extends AbstractSecurityController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
