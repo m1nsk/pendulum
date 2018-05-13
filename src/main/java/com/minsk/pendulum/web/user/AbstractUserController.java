@@ -3,6 +3,7 @@ package com.minsk.pendulum.web.user;
 import com.minsk.pendulum.DTO.DtoUtils;
 import com.minsk.pendulum.DTO.user.UserCreateDto;
 import com.minsk.pendulum.DTO.user.UserDto;
+import com.minsk.pendulum.DTO.user.UserFullDto;
 import com.minsk.pendulum.model.User;
 import com.minsk.pendulum.service.UserService;
 import com.minsk.pendulum.web.AbstractSecurityController;
@@ -26,19 +27,26 @@ public abstract class AbstractUserController extends AbstractSecurityController 
     private DtoUtils dtoUtils;
 
     public List<UserDto> getAll() {
-        log.info("getAll");
         List<User> users = service.getAll();
         return users.stream().map(user -> dtoUtils.convertToDto(user)).collect(Collectors.toList());
     }
 
+    public List<UserFullDto> getAllFull() {
+        List<User> users = service.getAll();
+        return users.stream().map(user -> dtoUtils.convertToFullDto(user)).collect(Collectors.toList());
+    }
+
     public UserDto get(int id) {
-        log.info("get {}", id);
         UserDto userDto = dtoUtils.convertToDto(service.get(id));
         return userDto;
     }
 
+    public UserFullDto getFull(int id) {
+        UserFullDto userDto = dtoUtils.convertToFullDto(service.get(id));
+        return userDto;
+    }
+
     public UserDto create(UserCreateDto userCreateDto) {
-        log.info("create {}", userCreateDto);
         User user = dtoUtils.convertToEntity(userCreateDto);
         checkNew(user);
         user = service.create(user);
@@ -46,19 +54,16 @@ public abstract class AbstractUserController extends AbstractSecurityController 
     }
 
     public void delete(int id) {
-        log.info("delete {}", id);
         service.delete(id);
     }
 
     public void update(UserDto userDto, int id) {
-        log.info("update {} with id={}", userDto, id);
         User user = dtoUtils.convertToEntity(userDto);
         assureIdConsistent(user, id);
         service.update(user);
     }
 
     public UserDto getByMail(String email) {
-        log.info("getByEmail {}", email);
         User user = service.getByEmail(email);
         return dtoUtils.convertToDto(user);
     }

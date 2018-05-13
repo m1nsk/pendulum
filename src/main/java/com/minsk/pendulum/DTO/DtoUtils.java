@@ -5,6 +5,7 @@ import com.minsk.pendulum.DTO.device.DeviceDto;
 import com.minsk.pendulum.DTO.message.MessageDto;
 import com.minsk.pendulum.DTO.user.UserCreateDto;
 import com.minsk.pendulum.DTO.user.UserDto;
+import com.minsk.pendulum.DTO.user.UserFullDto;
 import com.minsk.pendulum.model.Channel;
 import com.minsk.pendulum.model.Device;
 import com.minsk.pendulum.model.Message;
@@ -15,6 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class DtoUtils {
     @Autowired
     private ModelMapper modelMapper;
+
+    public UserFullDto convertToFullDto(User user) {
+        UserFullDto userDto = modelMapper.map(user, UserFullDto.class);
+        return userDto;
+    }
 
     public UserDto convertToDto(User user) {
         UserDto userDto = modelMapper.map(user, UserDto.class);

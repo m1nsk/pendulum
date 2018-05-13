@@ -18,8 +18,9 @@
     <!--</http>-->
 
     <http entry-point-ref="restAuthenticationEntryPoint" use-expressions="true">
+        <intercept-url pattern="/registration" access="isAnonymous()"/>
         <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/rest/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
+        <intercept-url pattern="/rest/**" access="permitAll()"/>
 
         <form-login
                 authentication-success-handler-ref="mySuccessHandler"

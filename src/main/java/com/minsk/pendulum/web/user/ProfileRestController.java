@@ -10,6 +10,7 @@ import com.minsk.pendulum.AuthorizedUser;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @CrossOrigin(maxAge = 3600)
@@ -18,8 +19,13 @@ public class ProfileRestController extends AbstractUserController {
     static final String REST_URL = "/rest/profile";
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDto get() {
-        return super.get(AuthorizedUser.id());
+    public List<UserDto> getAll() {
+        return super.getAll();
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDto get(@PathVariable("id") int id) {
+        return super.get(id);
     }
 
     @DeleteMapping
@@ -31,16 +37,5 @@ public class ProfileRestController extends AbstractUserController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody UserDto userDto) {
         super.update(userDto, AuthorizedUser.id());
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> createWithLocation(@RequestBody UserCreateDto user) {
-        UserDto created = super.create(user);
-
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-
-        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 }

@@ -10,13 +10,17 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class UserCreateDto {
+public class UserFullDto {
+    @NotNull
+    private Integer id;
     @NotNull
     private String name;
     @NotNull
     private String password;
     @NotNull
     private String email;
+    @NotNull
+    private Date registered;
     @NotNull
     private Set<Role> roles;
 }
