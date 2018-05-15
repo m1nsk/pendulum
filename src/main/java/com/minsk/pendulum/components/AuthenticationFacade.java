@@ -15,6 +15,7 @@ public class AuthenticationFacade implements IAuthenticationFacade {
 
     @Override
     public int getUserId() {
-        return ((MyUserPrincipal) getAuthentication().getPrincipal()).getUserId();
+        Authentication authentication = getAuthentication();
+        return ((MyUserPrincipal)authentication.getPrincipal()).getUserId();
     }
 }

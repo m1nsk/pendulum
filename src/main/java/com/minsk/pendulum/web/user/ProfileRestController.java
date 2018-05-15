@@ -2,6 +2,7 @@ package com.minsk.pendulum.web.user;
 
 import com.minsk.pendulum.DTO.user.UserCreateDto;
 import com.minsk.pendulum.DTO.user.UserDto;
+import com.minsk.pendulum.DTO.user.UserFullDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,11 @@ public class ProfileRestController extends AbstractUserController {
         return super.get(id);
     }
 
+    @GetMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDto getProfile() {
+        return super.get(authenticationFacade.getUserId());
+    }
+
     @DeleteMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete() {
@@ -36,6 +42,6 @@ public class ProfileRestController extends AbstractUserController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody UserDto userDto) {
-        super.update(userDto, AuthorizedUser.id());
+        super.update(userDto, authenticationFacade.getUserId());
     }
 }

@@ -1,6 +1,7 @@
 package com.minsk.pendulum.repository.dataJpa;
 
 import com.minsk.pendulum.model.Channel;
+import com.minsk.pendulum.model.Device;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,8 @@ public interface CrudChannelRepository extends JpaRepository<Channel, Integer> {
 
     @Query("SELECT c FROM Channel c WHERE c.user.id=:userId order by c.id desc")
     List<Channel> getAll(@Param("userId") int userId);
+
+//    @Query("SELECT c FROM Channel c left join channel_device cd on cd.channel_id =c.id having cd.device_id =:deviceId")
+//    List<Channel> getAllByDevice(@Param("deviceId") int deviceId);
 }
 

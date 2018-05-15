@@ -47,8 +47,8 @@ public abstract class AbstractUserController extends AbstractSecurityController 
     }
 
     public UserDto create(UserCreateDto userCreateDto) {
+        checkNew(userCreateDto);
         User user = dtoUtils.convertToEntity(userCreateDto);
-        checkNew(user);
         user = service.create(user);
         return dtoUtils.convertToDto(user);
     }
@@ -58,8 +58,8 @@ public abstract class AbstractUserController extends AbstractSecurityController 
     }
 
     public void update(UserDto userDto, int id) {
+        assureIdConsistent(userDto, id);
         User user = dtoUtils.convertToEntity(userDto);
-        assureIdConsistent(user, id);
         service.update(user);
     }
 

@@ -1,5 +1,6 @@
 package com.minsk.pendulum.web.device;
 
+import com.minsk.pendulum.DTO.channel.ChannelDto;
 import com.minsk.pendulum.DTO.device.DeviceDto;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.http.MediaType;
@@ -41,5 +42,10 @@ public class DeviceRestController extends AbstractDeviceRestController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<DeviceDto> getAll() {
         return super.getAll();
+    }
+
+    @GetMapping(value = "/channel/{channelId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<DeviceDto> getAllByChannel(@PathVariable("channelId") int channelId) {
+        return super.getAllByChannel(channelId);
     }
 }

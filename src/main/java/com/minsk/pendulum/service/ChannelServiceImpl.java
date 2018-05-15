@@ -1,5 +1,7 @@
 package com.minsk.pendulum.service;
 
+import com.minsk.pendulum.DTO.DtoUtils;
+import com.minsk.pendulum.DTO.channel.ChannelDto;
 import com.minsk.pendulum.model.Channel;
 import com.minsk.pendulum.model.Message;
 import com.minsk.pendulum.model.User;
@@ -7,10 +9,14 @@ import com.minsk.pendulum.repository.ChannelRepository;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.minsk.pendulum.util.ValidationUtil.assureIdConsistent;
+import static com.minsk.pendulum.util.ValidationUtil.checkNew;
 import static com.minsk.pendulum.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -25,7 +31,6 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public Channel create(Channel channel, int userId) {
-        Assert.notNull(channel, "channel must not be null");
         return repository.save(channel, userId);
     }
 
@@ -45,19 +50,13 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public Channel changeOwner(Channel channel, int userId, User newUser) {
-        channel.setUser(newUser);
-        return checkNotFoundWithId(repository.save(channel, userId), channel.getId());
-    }
-
-    @Override
-    public Channel setNewMessage(Channel channel, int userId, Message message) {
-        channel.setMessage(message);
-        return checkNotFoundWithId(repository.save(channel, userId), channel.getId());
-    }
-
-    @Override
     public List<Channel> getAll(int userId) {
         return repository.getAll(userId);
+    }
+
+    @Override
+    @Transactional
+    public List<Channel> getAllByDevice(int deviceId, int userId) {
+        return repository.getAllByDevice(deviceId, userId);
     }
 }

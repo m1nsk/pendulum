@@ -2,6 +2,7 @@ package com.minsk.pendulum.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "devices")
@@ -10,7 +11,13 @@ public class Device extends AbstractNamedEntity {
     @Column(name = "serial", nullable = false)
     private int serial;
 
-    @ManyToOne
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "channel_device",
+            joinColumns = @JoinColumn(name = "device_id"),
+            inverseJoinColumns = @JoinColumn(name = "channel_id"))
+    private List<Channel> channels;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
     private User user;
@@ -47,6 +54,14 @@ public class Device extends AbstractNamedEntity {
 
     public void setSerial(int serial) {
         this.serial = serial;
+    }
+
+    public List<Channel> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(List<Channel> channels) {
+        this.channels = channels;
     }
 
     @Override

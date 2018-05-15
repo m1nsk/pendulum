@@ -42,4 +42,9 @@ public class ChannelRestController extends AbstractChannelRestController {
     public List<ChannelDto> getAll() {
         return super.getAll();
     }
+
+    @GetMapping(value = "/device/{deviceId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ChannelDto> getAllByDevice(@PathVariable("deviceId") int deviceId) {
+        return super.getAllByDevice(deviceId);
+    }
 }

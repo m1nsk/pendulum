@@ -1,6 +1,7 @@
 package com.minsk.pendulum.repository.dataJpa;
 
 import com.minsk.pendulum.model.Channel;
+import com.minsk.pendulum.model.Device;
 import com.minsk.pendulum.repository.ChannelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,10 +13,13 @@ import java.util.List;
 public class DataJpaChannelRepositoryImpl implements ChannelRepository {
 
     @Autowired
-    private CrudChannelRepository crudDeviceRepository;
+    private CrudChannelRepository crudChannelRepository;
 
     @Autowired
     private CrudUserRepository crudUserRepository;
+
+    @Autowired
+    private CrudDeviceRepository crudDeviceRepository;
 
     @Override
     @Transactional
@@ -24,21 +28,31 @@ public class DataJpaChannelRepositoryImpl implements ChannelRepository {
             return null;
         }
         channel.setUser(crudUserRepository.getOne(userId));
-        return crudDeviceRepository.save(channel);
+        return crudChannelRepository.save(channel);
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return crudDeviceRepository.delete(id, userId) != 0;
+        return crudChannelRepository.delete(id, userId) != 0;
     }
 
     @Override
     public Channel get(int id, int userId) {
-        return crudDeviceRepository.findById(id).filter(channel -> channel.getUser().getId() == userId).orElse(null);
+        return crudChannelRepository.findById(id).filter(channel -> channel.getUser().getId() == userId).orElse(null);
     }
 
     @Override
     public List<Channel> getAll(int userId) {
-        return crudDeviceRepository.getAll(userId);
+        return crudChannelRepository.getAll(userId);
+    }
+
+    @Override
+    public List<Channel> getAllByDevice(int deviceId, int userID) {
+        Device device = crudDeviceRepository.findById(deviceId).orElse(null);
+        if (device == null && !device.getUser().getId().equals(userID)){
+            return null;
+        }
+        List<Channel> result = device.getChannels();
+        return result;
     }
 }

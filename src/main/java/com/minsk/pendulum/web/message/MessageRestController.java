@@ -14,9 +14,9 @@ public class MessageRestController extends AbstractMessageRestController {
     public static final String REST_URL = "/rest/message";
 
     @Override
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public MessageDto create(@RequestBody MessageDto messageDto) {
-        return super.create(messageDto);
+    @PostMapping(value = "channel/{channelId}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public MessageDto create(@RequestBody MessageDto messageDto, @PathVariable("channelId") int channelId) {
+        return super.create(messageDto, channelId);
     }
 
     @Override

@@ -5,7 +5,10 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.minsk.pendulum.**.service"/>
+    <context:component-scan base-package="com.minsk.pendulum.**.converter"/>
     <context:component-scan base-package="com.minsk.pendulum.**.components"/>
+    <bean class="com.minsk.pendulum.DTO.DtoUtils" id="dtoUtils"/>
+    <bean class="org.modelmapper.ModelMapper" id="modelMapper"/>
     <bean id ="passwordEncoder" class = "org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method = "getInstance" />
 
 </beans>

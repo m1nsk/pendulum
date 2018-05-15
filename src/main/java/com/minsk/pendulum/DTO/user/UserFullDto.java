@@ -1,5 +1,6 @@
 package com.minsk.pendulum.DTO.user;
 
+import com.minsk.pendulum.DTO.AbstractBaseDto;
 import com.minsk.pendulum.model.Role;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class UserFullDto {
-    @NotNull
-    private Integer id;
+public class UserFullDto extends AbstractBaseDto {
     @NotNull
     private String name;
     @NotNull

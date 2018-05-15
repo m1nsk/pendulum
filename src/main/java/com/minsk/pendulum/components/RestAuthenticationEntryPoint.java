@@ -17,8 +17,8 @@ public class RestAuthenticationEntryPoint
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException authException) throws IOException {
-        response.addHeader( "Access-Control-Allow-Origin", "http://localhost:1024");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//        response.addHeader( "Access-Control-Allow-Origin", "http://localhost:1024");
+//        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.sendError( HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized" );
     }
 }

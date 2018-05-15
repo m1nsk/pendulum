@@ -8,11 +8,11 @@ import java.util.List;
 @Table(name = "channels")
 public class Channel extends AbstractNamedEntity {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "current_message")
     private Message message;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
     private User user;

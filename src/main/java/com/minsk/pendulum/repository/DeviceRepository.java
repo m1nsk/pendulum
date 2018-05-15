@@ -14,4 +14,6 @@ public interface DeviceRepository {
     Device get(int id, int userId);
 
     List<Device> getAll(int userId);
+
+    List<Device> getAllByChannel(int channelId, int userID);
 }

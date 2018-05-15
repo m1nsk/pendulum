@@ -7,9 +7,6 @@
 
     <bean class="com.minsk.pendulum.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
-    <bean class="org.modelmapper.ModelMapper" id="modelMapper"/>
-    <bean class="com.minsk.pendulum.DTO.DtoUtils" id="dtoUtils"/>
-
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">

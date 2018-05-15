@@ -18,9 +18,7 @@ public interface ChannelService {
 
     Channel update(Channel channel, int userId);
 
-    Channel changeOwner(Channel channel, int userId, User newUser);
-
-    Channel setNewMessage(Channel channel, int userId, Message message);
-
     List<Channel> getAll(int userId);
+
+    List<Channel> getAllByDevice(int deviceId, int userId);
 }

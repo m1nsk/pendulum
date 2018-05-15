@@ -17,4 +17,6 @@ public interface DeviceService {
     Device update(Device device, int userId);
 
     List<Device> getAll(int userId);
+
+    List<Device> getAllByChannel(int channelId, int userID);
 }
