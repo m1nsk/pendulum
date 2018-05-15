@@ -16,7 +16,7 @@ import java.util.HashSet;
 @CrossOrigin(maxAge = 3600)
 @RequestMapping(RegistrationRestController.REST_URL)
 public class RegistrationRestController extends AbstractUserController {
-    static final String REST_URL = "/rest/registration";
+    static final String REST_URL = "/registration";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDto createWithLocation(@RequestBody UserCreateDto userCreateDto) {

@@ -18,7 +18,7 @@
     <!--</http>-->
 
     <http entry-point-ref="restAuthenticationEntryPoint" use-expressions="true">
-        <intercept-url pattern="/registration" access="isAnonymous()"/>
+        <intercept-url pattern="/registration" access="permitAll()"/>
         <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/rest/**" access="isAuthenticated()"/>
 

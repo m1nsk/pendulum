@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -18,6 +17,6 @@ public class UserCreateDto extends AbstractBaseDto {
     private String password;
     @NotNull
     private String email;
-    @NotNull
+
     private Set<Role> roles;
 }

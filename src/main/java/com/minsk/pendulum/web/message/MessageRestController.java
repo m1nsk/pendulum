@@ -36,4 +36,10 @@ public class MessageRestController extends AbstractMessageRestController {
     public List<MessageDto> getAll() {
         return super.getAll();
     }
+
+    @Override
+    @GetMapping(value = "/channel/{channelId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MessageDto> getAllByChannel(@PathVariable("channelId") int channelId) {
+        return super.getAllByChannel(channelId);
+    }
 }

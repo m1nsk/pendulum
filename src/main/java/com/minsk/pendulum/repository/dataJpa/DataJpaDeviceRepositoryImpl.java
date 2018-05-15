@@ -24,11 +24,16 @@ public class DataJpaDeviceRepositoryImpl implements DeviceRepository {
     @Override
     @Transactional
     public Device save(Device device, int userId) {
-        if (!device.isNew() && get(device.getId(), userId) == null) {
+        if (device.isNew()) {
+            device.setUser(crudUserRepository.getOne(userId));
+            return crudDeviceRepository.save(device);
+        }
+        if (get(device.getId(), userId) == null) {
             return null;
         }
-        device.setUser(crudUserRepository.getOne(userId));
-        return crudDeviceRepository.save(device);
+        Device deviceToUpdate = crudDeviceRepository.getOne(device.getId());
+        deviceToUpdate.deviceUpdate(device);
+        return crudDeviceRepository.save(deviceToUpdate);
     }
 
     @Override
@@ -49,7 +54,7 @@ public class DataJpaDeviceRepositoryImpl implements DeviceRepository {
     @Override
     public List<Device> getAllByChannel(int channelId, int userID) {
         Channel channel = crudChannelRepository.findById(channelId).orElse(null);
-        if (channel == null && !channel.getUser().getId().equals(userID)){
+        if (channel == null || !channel.getUser().getId().equals(userID)){
             return null;
         }
         List<Device> result = channel.getDevices();

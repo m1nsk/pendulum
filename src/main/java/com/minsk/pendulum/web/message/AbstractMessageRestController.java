@@ -32,4 +32,9 @@ public class AbstractMessageRestController extends AbstractSecurityController {
         return converter.getAll(userId);
     }
 
+    public List<MessageDto> getAllByChannel(int channelId) {
+        int userId = authenticationFacade.getUserId();
+        return converter.getAllByChannel(channelId, userId);
+    }
+
 }

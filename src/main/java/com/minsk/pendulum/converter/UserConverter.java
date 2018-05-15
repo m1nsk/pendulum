@@ -1,22 +1,28 @@
 package com.minsk.pendulum.converter;
 
 
-import com.minsk.pendulum.model.User;
+import com.minsk.pendulum.DTO.user.UserCreateDto;
+import com.minsk.pendulum.DTO.user.UserDto;
+import com.minsk.pendulum.DTO.user.UserFullDto;
 import com.minsk.pendulum.util.exception.NotFoundException;
 
 import java.util.List;
 
 public interface UserConverter {
 
-    User create(User user);
+    UserDto create(UserCreateDto userCreateDto);
 
     void delete(int id) throws NotFoundException;
 
-    User get(int id) throws NotFoundException;
+    UserDto get(int id) throws NotFoundException;
 
-    User getByEmail(String email) throws NotFoundException;
+    UserFullDto getFull(int id) throws NotFoundException;
 
-    void update(User user);
+    UserDto getByEmail(String email) throws NotFoundException;
 
-    List<User> getAll();
+    void update(UserDto UserDto);
+
+    List<UserDto> getAll();
+
+    List<UserFullDto> getAllFull();
 }

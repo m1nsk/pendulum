@@ -8,14 +8,12 @@ import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.minsk.pendulum.util.ValidationUtil.checkNotFoundWithId;
-
 @Service
+@Transactional
 public class ChannelConverterImpl implements ChannelConverter {
 
     private ChannelService service;
@@ -31,7 +29,6 @@ public class ChannelConverterImpl implements ChannelConverter {
     @Override
     public ChannelDto create(ChannelDto channelDto, int userId) {
         Channel channel = dtoUtils.convertToEntity(channelDto);
-        Assert.notNull(channel, "channel must not be null");
         return dtoUtils.convertToDto(service.create(channel, userId));
     }
 
@@ -48,7 +45,7 @@ public class ChannelConverterImpl implements ChannelConverter {
     @Override
     public ChannelDto update(ChannelDto channelDto, int userId) {
             Channel channel = dtoUtils.convertToEntity(channelDto);
-            channel = checkNotFoundWithId(service.create(channel, userId), channel.getId());
+            channel = service.create(channel, userId);
             return dtoUtils.convertToDto(channel);
     }
 
@@ -59,9 +56,8 @@ public class ChannelConverterImpl implements ChannelConverter {
     }
 
     @Override
-    @Transactional
     public List<ChannelDto> getAllByDevice(int deviceId, int userId) {
-        List<Channel> channels = checkNotFoundWithId(service.getAllByDevice(deviceId, userId), deviceId);
+        List<Channel> channels = service.getAllByDevice(deviceId, userId);
         return channels.stream().map(channel -> dtoUtils.convertToDto(channel))
                 .collect(Collectors.toList());
     }

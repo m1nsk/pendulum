@@ -14,4 +14,6 @@ public interface MessageRepository {
     Message get(int id);
 
     List<Message> getAll(int userId);
+
+    List<Message> getAllByChannel(int channelId, int userId);
 }

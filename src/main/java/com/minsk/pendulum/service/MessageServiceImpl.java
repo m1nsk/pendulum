@@ -41,4 +41,9 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> getAll(int userId) {
         return repository.getAll(userId);
     }
+
+    @Override
+    public List<Message> getAllByChannel(int channelId, int userId) {
+        return repository.getAllByChannel(channelId, userId);
+    }
 }

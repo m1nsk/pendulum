@@ -42,7 +42,6 @@ public class Message extends AbstractBaseMessageEntity {
         this.message = message;
         this.channel = channel;
         this.user = user;
-        this.date = date;
     }
 
     public String getMessage() {

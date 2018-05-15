@@ -15,43 +15,53 @@ import java.util.List;
 public class DataJpaMessageRepositoryImpl implements MessageRepository {
 
     @Autowired
-    private CrudMessageRepository crudMessageRepository;
+    private CrudMessageRepository messageRepository;
 
     @Autowired
-    private UserRepository crudUserRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private ChannelRepository dataJpaChannelRepository;
+    private CrudChannelRepository channelRepository;
 
     @Override
     @Transactional
     public Message save(Message message, int userId, int channelId) {
-        if (!message.isNew()) {
-            return null;
+        if (message.isNew()) {
+            Message messageToSave;
+            Channel channel = channelRepository.findById(channelId).orElse(null);
+            if (channel == null && channel.getUser().getId() != userId) {
+                return null;
+            }
+            message.setUser(userRepository.get(userId));
+            message.setChannel(channel);
+            messageToSave = messageRepository.save(message);
+            channel.setMessage(message);
+            return messageToSave;
         }
-        Channel channel = dataJpaChannelRepository.get(channelId, userId);
-        if (channel == null) {
-            return null;
-        }
-        message.setUser(crudUserRepository.get(userId));
-        message.setChannel(channel);
-        Message message_result = crudMessageRepository.save(message);
-        channel.setMessage(message_result);
-        return message;
+        return null;
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return crudMessageRepository.delete(id, userId) != 0;
+        return messageRepository.delete(id, userId) != 0;
     }
 
     @Override
     public Message get(int id) {
-        return crudMessageRepository.findById(id).orElse(null);
+        return messageRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Message> getAll(int userId) {
-        return crudMessageRepository.getAll(userId);
+        return messageRepository.getAll(userId);
+    }
+
+    @Override
+    public List<Message> getAllByChannel(int channelId, int userId) {
+        Channel channel =  channelRepository.findById(channelId).orElse(null);
+        if (channel == null || channel.getUser().getId() != userId) {
+            return null;
+        }
+        return channel.getMessages();
     }
 }

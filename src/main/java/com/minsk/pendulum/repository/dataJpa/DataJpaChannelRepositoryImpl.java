@@ -2,6 +2,7 @@ package com.minsk.pendulum.repository.dataJpa;
 
 import com.minsk.pendulum.model.Channel;
 import com.minsk.pendulum.model.Device;
+import com.minsk.pendulum.model.User;
 import com.minsk.pendulum.repository.ChannelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,11 +25,16 @@ public class DataJpaChannelRepositoryImpl implements ChannelRepository {
     @Override
     @Transactional
     public Channel save(Channel channel, int userId) {
-        if (!channel.isNew() && get(channel.getId(), userId) == null) {
+        if (channel.isNew()) {
+            channel.setUser(crudUserRepository.getOne(userId));
+            return crudChannelRepository.save(channel);
+        }
+        if (get(channel.getId(), userId) == null) {
             return null;
         }
-        channel.setUser(crudUserRepository.getOne(userId));
-        return crudChannelRepository.save(channel);
+        Channel channelToUpdate = crudChannelRepository.getOne(channel.getId());
+        channelToUpdate.channelUpdate(channel);
+        return crudChannelRepository.save(channelToUpdate);
     }
 
     @Override

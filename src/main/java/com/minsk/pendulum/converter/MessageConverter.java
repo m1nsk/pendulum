@@ -15,4 +15,6 @@ public interface MessageConverter {
     MessageDto get(int id) throws NotFoundException;
 
     List<MessageDto> getAll(int userId);
+
+    List<MessageDto> getAllByChannel(int channelId, int userId);
 }

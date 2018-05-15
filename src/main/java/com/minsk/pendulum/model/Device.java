@@ -40,6 +40,11 @@ public class Device extends AbstractNamedEntity {
         this.user = user;
     }
 
+    public void deviceUpdate(Device device) {
+        this.name = device.getName();
+        this.serial = device.getSerial();
+    }
+
     public User getUser() {
         return user;
     }

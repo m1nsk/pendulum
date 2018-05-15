@@ -24,8 +24,5 @@ public interface CrudChannelRepository extends JpaRepository<Channel, Integer> {
 
     @Query("SELECT c FROM Channel c WHERE c.user.id=:userId order by c.id desc")
     List<Channel> getAll(@Param("userId") int userId);
-
-//    @Query("SELECT c FROM Channel c left join channel_device cd on cd.channel_id =c.id having cd.device_id =:deviceId")
-//    List<Channel> getAllByDevice(@Param("deviceId") int deviceId);
 }
 

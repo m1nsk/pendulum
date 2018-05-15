@@ -12,7 +12,7 @@ public class Channel extends AbstractNamedEntity {
     @JoinColumn(name = "current_message")
     private Message message;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
     private User user;
@@ -43,6 +43,10 @@ public class Channel extends AbstractNamedEntity {
         this.user = user;
         this.messages = messages;
         this.devices = devices;
+    }
+
+    public void channelUpdate(Channel channel) {
+        this.name = channel.getName() == null ? this.name : channel.getName();
     }
 
     public User getUser() {

@@ -7,7 +7,6 @@ import com.minsk.pendulum.service.DeviceService;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +14,7 @@ import java.util.stream.Collectors;
 import static com.minsk.pendulum.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
+@Transactional
 public class DeviceConverterImpl implements DeviceConverter {
 
     private DeviceService service;
@@ -29,7 +29,6 @@ public class DeviceConverterImpl implements DeviceConverter {
     @Override
     public DeviceDto create(DeviceDto deviceDto, int userId) {
         Device device = dtoUtils.convertToEntity(deviceDto);
-        Assert.notNull(device, "channel must not be null");
         return dtoUtils.convertToDto(service.create(device, userId));
     }
 
@@ -47,7 +46,7 @@ public class DeviceConverterImpl implements DeviceConverter {
     @Transactional
     public DeviceDto update(DeviceDto deviceDto, int userId) {
         Device device = dtoUtils.convertToEntity(deviceDto);
-        device = checkNotFoundWithId(service.create(device, userId), device.getId());
+        device = service.create(device, userId);
         return dtoUtils.convertToDto(device);
     }
 

@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class AbstractBaseDto {
 
-    @NotNull
     private Integer id;
 
     public boolean isNew() {
