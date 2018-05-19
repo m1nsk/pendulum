@@ -28,6 +28,11 @@ public class AbstractChannelRestController extends AbstractSecurityController {
         return converter.update(channelDto, userId);
     }
 
+    public void addDevice(int channelId, int deviceId) {
+        int userId = authenticationFacade.getUserId();
+        converter.addDevice(channelId, deviceId);
+    }
+
     public void delete(int id) throws NotFoundException {
         int userId = authenticationFacade.getUserId();
         converter.delete(id, userId);

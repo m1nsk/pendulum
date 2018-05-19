@@ -50,6 +50,11 @@ public class ChannelConverterImpl implements ChannelConverter {
     }
 
     @Override
+    public void addDevice(int channelId, int deviceId) {
+        service.addDevice(channelId, deviceId);
+    }
+
+    @Override
     public List<ChannelDto> getAll(int userId) {
         return service.getAll(userId).stream().map(channel -> dtoUtils.convertToDto(channel))
                 .collect(Collectors.toList());

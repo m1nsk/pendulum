@@ -1,6 +1,7 @@
 package com.minsk.pendulum.repository.dataJpa;
 
 import com.minsk.pendulum.model.Channel;
+import com.minsk.pendulum.model.Device;
 import com.minsk.pendulum.model.Message;
 import com.minsk.pendulum.repository.ChannelRepository;
 import com.minsk.pendulum.repository.MessageRepository;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -22,6 +25,9 @@ public class DataJpaMessageRepositoryImpl implements MessageRepository {
 
     @Autowired
     private CrudChannelRepository channelRepository;
+
+    @Autowired
+    private CrudDeviceRepository deviceRepository;
 
     @Override
     @Transactional
@@ -49,6 +55,17 @@ public class DataJpaMessageRepositoryImpl implements MessageRepository {
     @Override
     public Message get(int id) {
         return messageRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Message getCurrentMessageByDevice(int deviceId, int userId) {
+        Device device = deviceRepository.getOne(deviceId);
+        List<Channel> channels = device.getChannels();
+        Message currentMessage = channels.stream()
+                .map(item -> item.getMessage())
+                .filter(item -> item != null)
+                .min(Comparator.comparing(Message::getDate)).orElse(null);
+        return currentMessage;
     }
 
     @Override

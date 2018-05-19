@@ -42,7 +42,12 @@ public class MessageConverterImpl implements MessageConverter {
 
     @Override
     public MessageDto get(int id) throws NotFoundException {
-        return dtoUtils.convertToDto(checkNotFoundWithId(service.get(id), id));
+        return dtoUtils.convertToDto(service.get(id));
+    }
+
+    @Override
+    public MessageDto getCurrentMessageByDevice(int deviceId, int userId) {
+        return dtoUtils.convertToDto(service.getCurrentMessageByDevice(deviceId, userId));
     }
 
     @Override

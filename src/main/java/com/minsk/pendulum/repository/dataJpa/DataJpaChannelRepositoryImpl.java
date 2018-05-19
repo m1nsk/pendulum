@@ -38,6 +38,13 @@ public class DataJpaChannelRepositoryImpl implements ChannelRepository {
     }
 
     @Override
+    public void addDevice(int channelId, int deviceId) {
+        Channel channel = crudChannelRepository.getOne(channelId);
+        Device device = crudDeviceRepository.getOne(deviceId);
+        channel.addDevice(device);
+    }
+
+    @Override
     public boolean delete(int id, int userId) {
         return crudChannelRepository.delete(id, userId) != 0;
     }

@@ -18,6 +18,7 @@ public class AbstractMessageRestController extends AbstractSecurityController {
         return converter.create(messageDto, userId, channelId);
     }
 
+
     public void delete(int id) throws NotFoundException {
         int userId = authenticationFacade.getUserId();
         converter.delete(id, userId);
@@ -35,6 +36,11 @@ public class AbstractMessageRestController extends AbstractSecurityController {
     public List<MessageDto> getAllByChannel(int channelId) {
         int userId = authenticationFacade.getUserId();
         return converter.getAllByChannel(channelId, userId);
+    }
+
+    public MessageDto getCurrentMessageByDevice(int deviceId) {
+        int userId = authenticationFacade.getUserId();
+        return converter.getCurrentMessageByDevice(deviceId, userId);
     }
 
 }

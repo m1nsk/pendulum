@@ -21,7 +21,7 @@ public class Message extends AbstractBaseMessageEntity {
     private User user;
 
     @Column(name = "date", nullable = false)
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDateTime date;
 
     public Message() {
     }

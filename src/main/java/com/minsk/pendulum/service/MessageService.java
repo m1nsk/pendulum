@@ -15,6 +15,8 @@ public interface MessageService {
 
     Message get(int id) throws NotFoundException;
 
+    Message getCurrentMessageByDevice(int deviceId, int userId) throws NotFoundException;
+
     List<Message> getAll(int userId);
 
     List<Message> getAllByChannel(int channelId, int userId);

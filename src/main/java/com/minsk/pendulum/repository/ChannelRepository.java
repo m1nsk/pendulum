@@ -13,6 +13,8 @@ public interface ChannelRepository {
     // null if not found
     Channel get(int id, int userId);
 
+    void addDevice(int channelId, int deviceId);
+
     List<Channel> getAll(int userId);
 
     List<Channel> getAllByDevice(int deviceId, int userId);

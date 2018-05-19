@@ -10,9 +10,11 @@ public interface MessageConverter {
 
     MessageDto create(MessageDto messageDto, int userId, int channelId);
 
-    void delete(int id, int userId) throws NotFoundException;
+    void delete(int id, int userId);
 
-    MessageDto get(int id) throws NotFoundException;
+    MessageDto get(int id);
+
+    MessageDto getCurrentMessageByDevice(int deviceId, int userId);
 
     List<MessageDto> getAll(int userId);
 

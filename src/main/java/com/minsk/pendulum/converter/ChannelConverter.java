@@ -16,6 +16,8 @@ public interface ChannelConverter {
 
     ChannelDto update(ChannelDto channel, int userId);
 
+    void addDevice(int channelId, int deviceId);
+
     List<ChannelDto> getAll(int userId);
 
     List<ChannelDto> getAllByDevice(int deviceId, int userId);

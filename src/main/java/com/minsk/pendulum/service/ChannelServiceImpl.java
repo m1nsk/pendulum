@@ -50,6 +50,11 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
+    public void addDevice(int channelId, int deviceId) {
+        repository.addDevice(channelId, deviceId);
+    }
+
+    @Override
     public List<Channel> getAll(int userId) {
         return repository.getAll(userId);
     }

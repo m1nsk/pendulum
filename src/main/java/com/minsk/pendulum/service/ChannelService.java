@@ -18,6 +18,8 @@ public interface ChannelService {
 
     Channel update(Channel channel, int userId);
 
+    void addDevice(int channelId, int deviceId);
+
     List<Channel> getAll(int userId);
 
     List<Channel> getAllByDevice(int deviceId, int userId);

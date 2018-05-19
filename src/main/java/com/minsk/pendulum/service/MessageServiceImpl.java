@@ -38,6 +38,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public Message getCurrentMessageByDevice(int deviceId, int userId) {
+        return checkNotFoundWithId(repository.getCurrentMessageByDevice(deviceId, userId), deviceId);
+    }
+
+    @Override
     public List<Message> getAll(int userId) {
         return repository.getAll(userId);
     }

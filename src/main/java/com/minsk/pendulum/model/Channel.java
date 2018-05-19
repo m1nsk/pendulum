@@ -2,6 +2,7 @@ package com.minsk.pendulum.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -79,6 +80,13 @@ public class Channel extends AbstractNamedEntity {
 
     public void setDevices(List<Device> devices) {
         this.devices = devices;
+    }
+
+    public void addDevice(Device device) {
+        if (devices == null) {
+            devices = new ArrayList<>();
+        }
+        devices.add(device);
     }
 
     @Override
