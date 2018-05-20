@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseMessageEntity {
+public abstract class AbstractBaseImageEntity {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -14,10 +14,10 @@ public abstract class AbstractBaseMessageEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_seq")
     protected Integer id;
 
-    protected AbstractBaseMessageEntity() {
+    protected AbstractBaseImageEntity() {
     }
 
-    protected AbstractBaseMessageEntity(Integer id) {
+    protected AbstractBaseImageEntity(Integer id) {
         this.id = id;
     }
 
@@ -47,7 +47,7 @@ public abstract class AbstractBaseMessageEntity {
         if (o == null || !getClass().equals(Hibernate.getClass(o))) {
             return false;
         }
-        AbstractBaseMessageEntity that = (AbstractBaseMessageEntity) o;
+        AbstractBaseImageEntity that = (AbstractBaseImageEntity) o;
         return id != null && id.equals(that.id);
     }
 

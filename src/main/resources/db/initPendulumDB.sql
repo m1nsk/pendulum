@@ -4,11 +4,13 @@ DROP TABLE IF EXISTS channel_device;
 DROP TABLE IF EXISTS channels;
 DROP TABLE IF EXISTS devices;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS images;
 DROP SEQUENCE IF EXISTS global_seq;
 DROP SEQUENCE IF EXISTS message_seq;
 
 CREATE SEQUENCE global_seq START 100000;
 CREATE SEQUENCE message_seq START 100000;
+CREATE SEQUENCE image_seq START 100000;
 
 
 CREATE TABLE users
@@ -65,4 +67,10 @@ CREATE TABLE channel_device (
   PRIMARY KEY (channel_id, device_id),
   FOREIGN KEY (channel_id) REFERENCES channels (id) ON DELETE CASCADE,
   FOREIGN KEY (device_id) REFERENCES devices (id) ON DELETE CASCADE
+);
+
+CREATE TABLE images (
+  id               INTEGER PRIMARY KEY DEFAULT nextval('image_seq'),
+  hash             INTEGER                 NOT NULL,
+  file_path        VARCHAR                 NOT NULL
 );

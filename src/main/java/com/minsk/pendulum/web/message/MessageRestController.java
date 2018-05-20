@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,18 +31,36 @@ public class MessageRestController extends AbstractMessageRestController {
     @PostMapping(value = "/channel")
     public String handlePost(MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
         //get form data fields
-        final String field= request.getParameter("file");
-        //and so on......
+        final String instructions = request.getParameter("file");
+        final String keys = request.getParameter("keys");
 
-        //Now get the files.
+        if(!validateJson(instructions)){
+            return "404";
+        }
+
         Iterator<String> iterator = request.getFileNames();
         File multipartFile = null;
-        Image image = null;
-        String mimetype = null;
+        List<BufferedImage> images = new ArrayList();
+        List<Integer> imgKeys = new ArrayList<>();
         while (iterator.hasNext()) {
-            multipartFile = convert(request.getFile(iterator.next()));
-            image = ImageIO.read(multipartFile);
+            multipartFile = convertToImage(request.getFile(iterator.next()));
+            BufferedImage image = ImageIO.read(multipartFile);
+            if (image == null) {
+                return "404";
+            }
+            image = resize(image, 300, 300);
+            if (image == null) {
+                return "404";
+            }
+            System.out.println(image.hashCode());
+            imgKeys.add(image.hashCode());
+            images.add(image);
         }
+        String instructionsToSave = modifyJsonWithImageKeys(instructions, keys, imgKeys);
+        if(instructionsToSave == null) {
+            return "404";
+        }
+
         return "101";
     }
 
@@ -75,12 +94,36 @@ public class MessageRestController extends AbstractMessageRestController {
         return super.getCurrentMessageByDevice(deviceId);
     }
 
-    public File convert(MultipartFile file) throws IOException {
+    public static File convertToImage(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         convFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
         return convFile;
+    }
+
+    private static BufferedImage resize(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
+
+    private static void storeImage(BufferedImage image) {
+    }
+
+    private static boolean validateJson(String json) {
+        return true;
+    }
+
+    private static String modifyJsonWithImageKeys(String instructions, String keys, List<Integer> imgKeys) {
+        return instructions;
+    }
+
+    private static boolean saveInstructionsAndImages(String instructions, List<BufferedImage>) {
+        return true;
     }
 }
