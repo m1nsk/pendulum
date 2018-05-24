@@ -1,16 +1,11 @@
 package com.minsk.pendulum.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "messages")
 public class Message extends AbstractBaseMessageEntity {
@@ -47,6 +42,14 @@ public class Message extends AbstractBaseMessageEntity {
         this.message = message;
         this.channel = channel;
         this.user = user;
+        this.date = date;
+    }
+
+    public Message(Integer id, String message, @NotNull Channel channel, @NotNull User user, Date date) {
+        super(id);
+        this.message = message;
+        this.channel = channel;
+        this.user = user;
     }
 
     public Message(Integer id, String message, @NotNull Channel channel,
@@ -67,5 +70,45 @@ public class Message extends AbstractBaseMessageEntity {
                 ", date=" + date +
                 ", id=" + id +
                 '}';
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<ImageEntity> getImageEntities() {
+        return imageEntities;
+    }
+
+    public void setImageEntities(List<ImageEntity> imageEntities) {
+        this.imageEntities = imageEntities;
     }
 }

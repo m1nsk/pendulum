@@ -5,12 +5,17 @@ import com.minsk.pendulum.DTO.user.UserCreateDto;
 import com.minsk.pendulum.DTO.user.UserDto;
 import com.minsk.pendulum.DTO.user.UserFullDto;
 import com.minsk.pendulum.converter.UserConverterImpl;
+import com.minsk.pendulum.model.Role;
 import com.minsk.pendulum.web.AbstractSecurityController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.minsk.pendulum.util.ValidationUtil.assureIdConsistent;
 
@@ -40,6 +45,7 @@ public abstract class AbstractUserController extends AbstractSecurityController 
     }
 
     public UserDto create(UserCreateDto userCreateDto) {
+        userCreateDto.setRoles(new HashSet<>(Arrays.asList(Role.ROLE_USER)));
         return converter.create(userCreateDto);
     }
 

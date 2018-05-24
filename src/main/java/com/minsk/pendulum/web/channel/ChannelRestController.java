@@ -5,6 +5,7 @@ import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,13 +16,13 @@ public class ChannelRestController extends AbstractChannelRestController {
 
     @Override
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ChannelDto create(@RequestBody ChannelDto channelDto) {
+    public ChannelDto create(@Valid @RequestBody ChannelDto channelDto) {
         return super.create(channelDto);
     }
 
     @Override
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ChannelDto update(@RequestBody ChannelDto channelDto, @PathVariable int id) {
+    public ChannelDto update(@Valid @RequestBody ChannelDto channelDto, @PathVariable int id) {
         return super.update(channelDto, id);
     }
 

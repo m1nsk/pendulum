@@ -1,7 +1,9 @@
 package com.minsk.pendulum.web.message;
 
 import com.minsk.pendulum.DTO.message.MessageDto;
+import com.minsk.pendulum.util.exception.InvalidDeviceInstructionsExeption;
 import com.minsk.pendulum.util.exception.NotFoundException;
+import com.minsk.pendulum.util.exception.WrongFileFormatExeption;
 import javassist.tools.web.BadHttpRequest;
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
@@ -35,7 +37,7 @@ public class MessageRestController extends AbstractMessageRestController {
         final String keys = request.getParameter("keys");
 
         if(!validateJson(instructions)){
-            throw new BadHttpRequest(new Exception("invalid instructions"));
+            throw new InvalidDeviceInstructionsExeption("invalid instructions");
         }
 
         Iterator<String> iterator = request.getFileNames();
@@ -43,7 +45,7 @@ public class MessageRestController extends AbstractMessageRestController {
         while (iterator.hasNext()) {
             File file = convertToImage(request.getFile(iterator.next()));
             if (file == null) {
-                throw new BadHttpRequest(new Exception("file is not an image"));
+                throw new WrongFileFormatExeption("invalid file format");
             }
             images.add(file);
         }

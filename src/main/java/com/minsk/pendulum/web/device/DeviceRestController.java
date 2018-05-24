@@ -6,6 +6,7 @@ import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -16,13 +17,13 @@ public class DeviceRestController extends AbstractDeviceRestController {
 
     @Override
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DeviceDto create(@RequestBody DeviceDto deviceDto) {
+    public DeviceDto create(@Valid @RequestBody DeviceDto deviceDto) {
         return super.create(deviceDto);
     }
 
     @Override
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DeviceDto update(@RequestBody DeviceDto deviceDto, @PathVariable int id) {
+    public DeviceDto update(@Valid @RequestBody DeviceDto deviceDto, @PathVariable int id) {
         return super.update(deviceDto, id);
     }
 

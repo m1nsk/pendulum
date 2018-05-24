@@ -4,9 +4,9 @@ import com.minsk.pendulum.model.ImageEntity;
 import com.minsk.pendulum.service.ImageDataService;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,11 +19,9 @@ public class ImageDataServiceImpl implements ImageDataService {
 
     private static final Logger log = Logger.getLogger(ImageDataServiceImpl.class.getName());
 
-    @Value("${store.path}")
     private static String SAVE_PATH = "/home/minsk/Изображения/New/";
 
     @Override
-    @Transactional
     public List<String> create(List<byte[]> imageData, List<String> pathList) throws IOException {
        try {
            for (int i = 0; i < pathList.size(); i++) {

@@ -4,18 +4,24 @@ import com.minsk.pendulum.DTO.AbstractBaseDto;
 import com.minsk.pendulum.model.Role;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Getter
 @Setter
 public class UserCreateDto extends AbstractBaseDto {
-    @NotNull
+    @NotBlank
+    @Length(min = 3)
     private String name;
-    @NotNull
+    @NotBlank
+    @Length(min = 6)
     private String password;
-    @NotNull
+    @NotBlank
+    @Email
     private String email;
 
     private Set<Role> roles;

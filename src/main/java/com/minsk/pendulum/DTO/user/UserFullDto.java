@@ -12,14 +12,14 @@ import java.util.Set;
 @Getter
 @Setter
 public class UserFullDto extends AbstractBaseDto {
-    @NotNull
+
     private String name;
-    @NotNull
+
     private String password;
-    @NotNull
+
     private String email;
-    @NotNull
+
     private Date registered;
-    @NotNull
+
     private Set<Role> roles;
 }

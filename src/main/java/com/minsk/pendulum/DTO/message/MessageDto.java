@@ -5,6 +5,8 @@ import com.minsk.pendulum.DTO.user.UserDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
 @Setter
 public class MessageDto extends AbstractBaseDto {
 
+    @NotBlank
     private String message;
 
     private UserDto user;

@@ -58,7 +58,7 @@ CREATE TABLE messages
   message     VARCHAR(1000)   NOT NULL,
   channel_id  INTEGER NOT NULL,
   user_id     INTEGER NOT NULL,
-  date        TIMESTAMP DEFAULT NOW(),
+  date        TIMESTAMP DEFAULT now(),
   FOREIGN KEY (channel_id) REFERENCES channels (id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

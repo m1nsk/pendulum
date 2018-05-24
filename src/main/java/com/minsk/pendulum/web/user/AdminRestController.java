@@ -7,6 +7,7 @@ import com.minsk.pendulum.model.Role;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +29,7 @@ public class AdminRestController extends AbstractUserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDto createWithLocation(@RequestBody UserCreateDto userCreateDto) {
+    public UserDto create(@Valid @RequestBody UserCreateDto userCreateDto) {
         userCreateDto.setRoles(new HashSet<>(Arrays.asList(Role.ROLE_ADMIN)));
         UserDto created = super.create(userCreateDto);
         return created;
