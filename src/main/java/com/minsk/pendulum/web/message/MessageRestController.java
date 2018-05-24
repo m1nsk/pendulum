@@ -2,7 +2,12 @@ package com.minsk.pendulum.web.message;
 
 import com.minsk.pendulum.DTO.message.MessageDto;
 import com.minsk.pendulum.util.exception.NotFoundException;
+import javassist.tools.web.BadHttpRequest;
+import org.apache.commons.io.FileUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -22,46 +27,27 @@ import java.util.List;
 public class MessageRestController extends AbstractMessageRestController {
     public static final String REST_URL = "/rest/message";
 
-//    @Override
-//    @PostMapping(value = "channel/{channelId}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public MessageDto create(@RequestBody MessageDto messageDto, @PathVariable("channelId") int channelId) {
-//        return super.create(messageDto, channelId);
-//    }
 
-    @PostMapping(value = "/channel")
-    public String handlePost(MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
+    @PostMapping(value = "channel/{channelId}")
+    public MessageDto create(MultipartHttpServletRequest request, @PathVariable("channelId") int channelId) throws Exception {
         //get form data fields
         final String instructions = request.getParameter("file");
         final String keys = request.getParameter("keys");
 
         if(!validateJson(instructions)){
-            return "404";
+            throw new BadHttpRequest(new Exception("invalid instructions"));
         }
 
         Iterator<String> iterator = request.getFileNames();
-        File multipartFile = null;
-        List<BufferedImage> images = new ArrayList();
-        List<Integer> imgKeys = new ArrayList<>();
+        List<File> images = new ArrayList<>();
         while (iterator.hasNext()) {
-            multipartFile = convertToImage(request.getFile(iterator.next()));
-            BufferedImage image = ImageIO.read(multipartFile);
-            if (image == null) {
-                return "404";
+            File file = convertToImage(request.getFile(iterator.next()));
+            if (file == null) {
+                throw new BadHttpRequest(new Exception("file is not an image"));
             }
-            image = resize(image, 300, 300);
-            if (image == null) {
-                return "404";
-            }
-            System.out.println(image.hashCode());
-            imgKeys.add(image.hashCode());
-            images.add(image);
+            images.add(file);
         }
-        String instructionsToSave = modifyJsonWithImageKeys(instructions, keys, imgKeys);
-        if(instructionsToSave == null) {
-            return "404";
-        }
-
-        return "101";
+        return super.uploadMessage(instructions, keys, images, channelId);
     }
 
     @Override
@@ -94,36 +80,19 @@ public class MessageRestController extends AbstractMessageRestController {
         return super.getCurrentMessageByDevice(deviceId);
     }
 
-    public static File convertToImage(MultipartFile file) throws IOException {
+    public static File convertToImage(MultipartFile file) {
         File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convFile;
-    }
-
-    private static BufferedImage resize(BufferedImage img, int height, int width) {
-        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-        return resized;
-    }
-
-    private static void storeImage(BufferedImage image) {
+        try (FileOutputStream fos = new FileOutputStream(convFile)) {
+            convFile.createNewFile();
+            fos.write(file.getBytes());
+            return convFile;
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     private static boolean validateJson(String json) {
         return true;
     }
 
-    private static String modifyJsonWithImageKeys(String instructions, String keys, List<Integer> imgKeys) {
-        return instructions;
-    }
-
-    private static boolean saveInstructionsAndImages(String instructions, List<BufferedImage>) {
-        return true;
-    }
 }

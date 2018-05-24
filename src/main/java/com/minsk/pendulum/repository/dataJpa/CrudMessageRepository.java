@@ -17,10 +17,6 @@ public interface CrudMessageRepository extends JpaRepository<Message, Integer> {
     @Query("DELETE FROM Message m WHERE m.id=:id AND m.user.id=:userId")
     int delete(@Param("id") int id, @Param("userId") int userId);
 
-    @Override
-    @Transactional
-    Message save(Message item);
-
     @Query("SELECT m FROM Message m WHERE m.user.id=:userId order by m.id desc")
     List<Message> getAll(@Param("userId") int userId);
 }

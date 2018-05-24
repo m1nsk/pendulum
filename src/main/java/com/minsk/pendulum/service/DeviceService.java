@@ -1,6 +1,5 @@
 package com.minsk.pendulum.service;
 
-
 import com.minsk.pendulum.model.Device;
 import com.minsk.pendulum.util.exception.NotFoundException;
 

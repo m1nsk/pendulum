@@ -17,8 +17,8 @@ public interface CrudImageRepository extends JpaRepository<ImageEntity, Integer>
 
     @Modifying
     @Transactional
-    @Query("GET FROM ImageEntity i WHERE i.hash=:hash")
-    ImageEntity findByHash(@Param("hash") int hash);
+    @Query("SELECT i FROM ImageEntity i WHERE i.hash=:hash")
+    ImageEntity findByHash(@Param("hash") String hash);
 
 }
 

@@ -1,19 +1,15 @@
-package com.minsk.pendulum.service;
+package com.minsk.pendulum.service.Impl;
 
 import com.minsk.pendulum.model.Device;
 import com.minsk.pendulum.repository.DeviceRepository;
-import com.minsk.pendulum.repository.DeviceRepository;
+import com.minsk.pendulum.service.DeviceService;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
 
-import static com.minsk.pendulum.util.ValidationUtil.checkNotFound;
 import static com.minsk.pendulum.util.ValidationUtil.checkNotFoundWithId;
 
 @Service

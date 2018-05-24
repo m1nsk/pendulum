@@ -28,7 +28,6 @@ public class User extends AbstractNamedEntity {
     private boolean enabled = true;
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
-    @NotNull
     private Date registered = new Date();
 
     @Enumerated(EnumType.STRING)

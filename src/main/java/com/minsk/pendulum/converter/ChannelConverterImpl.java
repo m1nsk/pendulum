@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ChannelConverterImpl implements ChannelConverter {
+public class ChannelConverterImpl {
 
     private ChannelService service;
 
@@ -25,42 +25,35 @@ public class ChannelConverterImpl implements ChannelConverter {
         this.service = service;
         this.dtoUtils = dtoUtils;
     }
-    
-    @Override
+
     public ChannelDto create(ChannelDto channelDto, int userId) {
         Channel channel = dtoUtils.convertToEntity(channelDto);
         return dtoUtils.convertToDto(service.create(channel, userId));
     }
 
-    @Override
-    public void delete(int id, int userId) throws NotFoundException {
+    public void delete(int id, int userId) {
         service.delete(id, userId);
     }
 
-    @Override
-    public ChannelDto get(int id, int userId) throws NotFoundException {
+    public ChannelDto get(int id, int userId) {
         return dtoUtils.convertToDto(service.get(id, userId));
     }
 
-    @Override
     public ChannelDto update(ChannelDto channelDto, int userId) {
             Channel channel = dtoUtils.convertToEntity(channelDto);
             channel = service.create(channel, userId);
             return dtoUtils.convertToDto(channel);
     }
 
-    @Override
     public void addDevice(int channelId, int deviceId) {
         service.addDevice(channelId, deviceId);
     }
 
-    @Override
     public List<ChannelDto> getAll(int userId) {
         return service.getAll(userId).stream().map(channel -> dtoUtils.convertToDto(channel))
                 .collect(Collectors.toList());
     }
 
-    @Override
     public List<ChannelDto> getAllByDevice(int deviceId, int userId) {
         List<Channel> channels = service.getAllByDevice(deviceId, userId);
         return channels.stream().map(channel -> dtoUtils.convertToDto(channel))

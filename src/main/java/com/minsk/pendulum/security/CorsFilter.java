@@ -1,4 +1,4 @@
-package com.minsk.pendulum.components;
+package com.minsk.pendulum.security;
 
 import java.io.IOException;
 

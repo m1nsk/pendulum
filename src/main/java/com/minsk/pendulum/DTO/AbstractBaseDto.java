@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class AbstractBaseDto {
+public abstract class AbstractBaseDto {
 
     private Integer id;
 

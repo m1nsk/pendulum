@@ -1,7 +1,7 @@
 package com.minsk.pendulum.web.channel;
 
 import com.minsk.pendulum.DTO.channel.ChannelDto;
-import com.minsk.pendulum.converter.ChannelConverter;
+import com.minsk.pendulum.converter.ChannelConverterImpl;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import com.minsk.pendulum.web.AbstractSecurityController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import static com.minsk.pendulum.util.ValidationUtil.checkNew;
 public class AbstractChannelRestController extends AbstractSecurityController {
 
     @Autowired
-    private ChannelConverter converter;
+    private ChannelConverterImpl converter;
 
     public ChannelDto create(ChannelDto channelDto) {
         checkNew(channelDto);

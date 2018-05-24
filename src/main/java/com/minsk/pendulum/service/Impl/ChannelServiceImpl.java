@@ -1,22 +1,15 @@
-package com.minsk.pendulum.service;
+package com.minsk.pendulum.service.Impl;
 
-import com.minsk.pendulum.DTO.DtoUtils;
-import com.minsk.pendulum.DTO.channel.ChannelDto;
 import com.minsk.pendulum.model.Channel;
-import com.minsk.pendulum.model.Message;
-import com.minsk.pendulum.model.User;
 import com.minsk.pendulum.repository.ChannelRepository;
+import com.minsk.pendulum.service.ChannelService;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.minsk.pendulum.util.ValidationUtil.assureIdConsistent;
-import static com.minsk.pendulum.util.ValidationUtil.checkNew;
 import static com.minsk.pendulum.util.ValidationUtil.checkNotFoundWithId;
 
 @Service

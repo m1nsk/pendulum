@@ -2,8 +2,6 @@ package com.minsk.pendulum.service;
 
 
 import com.minsk.pendulum.model.Channel;
-import com.minsk.pendulum.model.Message;
-import com.minsk.pendulum.model.User;
 import com.minsk.pendulum.util.exception.NotFoundException;
 
 import java.util.List;

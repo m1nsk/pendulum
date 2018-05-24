@@ -1,4 +1,4 @@
-package com.minsk.pendulum.components;
+package com.minsk.pendulum.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

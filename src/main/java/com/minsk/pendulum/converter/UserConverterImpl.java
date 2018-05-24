@@ -21,7 +21,7 @@ import static com.minsk.pendulum.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 @Transactional
-public class UserConverterImpl implements UserConverter {
+public class UserConverterImpl {
 
     private UserService service;
 
@@ -32,44 +32,36 @@ public class UserConverterImpl implements UserConverter {
         this.service = service;
         this.dtoUtils = dtoUtils;
     }
-
-    @Override
+    
     public UserDto create(UserCreateDto userCreateDto) {
         User user = service.create(dtoUtils.convertToEntity(userCreateDto));
         return dtoUtils.convertToDto(user);
     }
 
-    @Override
-    public void delete(int id) throws NotFoundException {
+    public void delete(int id) {
         service.delete(id);
     }
 
-    @Override
-    public UserDto get(int id) throws NotFoundException {
+    public UserDto get(int id) {
         return dtoUtils.convertToDto(service.get(id));
     }
 
-    @Override
-    public UserDto getByEmail(String email) throws NotFoundException {
+    public UserDto getByEmail(String email) {
         return dtoUtils.convertToDto(service.getByEmail(email));
     }
 
-    @Override
     public List<UserDto> getAll() {
         return service.getAll().stream().map(item -> dtoUtils.convertToDto(item)).collect(Collectors.toList());
     }
 
-    @Override
     public void update(UserDto userDto) {
         service.create(dtoUtils.convertToEntity(userDto));
     }
 
-    @Override
-    public UserFullDto getFull(int id) throws NotFoundException {
+    public UserFullDto getFull(int id) {
         return dtoUtils.convertToFullDto(service.get(id));
     }
 
-    @Override
     public List<UserFullDto> getAllFull() {
         return service.getAll().stream().map(item -> dtoUtils.convertToFullDto(item)).collect(Collectors.toList());
     }

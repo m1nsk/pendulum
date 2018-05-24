@@ -1,13 +1,12 @@
-package com.minsk.pendulum.service;
+package com.minsk.pendulum.service.Impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import com.minsk.pendulum.model.User;
 import com.minsk.pendulum.repository.UserRepository;
+import com.minsk.pendulum.service.UserService;
 import com.minsk.pendulum.util.exception.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 

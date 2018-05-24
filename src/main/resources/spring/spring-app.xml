@@ -6,7 +6,7 @@
 
     <context:component-scan base-package="com.minsk.pendulum.**.service"/>
     <context:component-scan base-package="com.minsk.pendulum.**.converter"/>
-    <context:component-scan base-package="com.minsk.pendulum.**.components"/>
+    <context:component-scan base-package="com.minsk.pendulum.**.security"/>
     <bean class="com.minsk.pendulum.DTO.DtoUtils" id="dtoUtils"/>
     <bean class="org.modelmapper.ModelMapper" id="modelMapper"/>
     <bean id ="passwordEncoder" class = "org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method = "getInstance" />
@@ -14,4 +14,5 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="2000000" />
     </bean>
+
 </beans>

@@ -15,7 +15,7 @@ import static com.minsk.pendulum.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 @Transactional
-public class DeviceConverterImpl implements DeviceConverter {
+public class DeviceConverterImpl {
 
     private DeviceService service;
 
@@ -26,23 +26,19 @@ public class DeviceConverterImpl implements DeviceConverter {
         this.dtoUtils = dtoUtils;
     }
 
-    @Override
     public DeviceDto create(DeviceDto deviceDto, int userId) {
         Device device = dtoUtils.convertToEntity(deviceDto);
         return dtoUtils.convertToDto(service.create(device, userId));
     }
-
-    @Override
-    public void delete(int id, int userId) throws NotFoundException {
+    
+    public void delete(int id, int userId) {
         service.delete(id, userId);
     }
 
-    @Override
-    public DeviceDto get(int id, int userId) throws NotFoundException {
+    public DeviceDto get(int id, int userId) {
         return dtoUtils.convertToDto(service.get(id, userId));
     }
 
-    @Override
     @Transactional
     public DeviceDto update(DeviceDto deviceDto, int userId) {
         Device device = dtoUtils.convertToEntity(deviceDto);
@@ -50,13 +46,11 @@ public class DeviceConverterImpl implements DeviceConverter {
         return dtoUtils.convertToDto(device);
     }
 
-    @Override
     public List<DeviceDto> getAll(int userId) {
         return service.getAll(userId).stream().map(device -> dtoUtils.convertToDto(device))
                 .collect(Collectors.toList());
     }
 
-    @Override
     public List<DeviceDto> getAllByChannel(int channelId, int userId) {
         List<Device> devices = checkNotFoundWithId(service.getAllByChannel(channelId, userId), channelId);
         return devices.stream().map(device -> dtoUtils.convertToDto(device))

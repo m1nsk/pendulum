@@ -1,4 +1,4 @@
-package com.minsk.pendulum.service.customService;
+package com.minsk.pendulum.security;
 
 import com.minsk.pendulum.model.Role;
 import com.minsk.pendulum.model.User;

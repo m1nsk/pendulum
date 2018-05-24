@@ -4,24 +4,21 @@ import com.minsk.pendulum.DTO.DtoUtils;
 import com.minsk.pendulum.DTO.user.UserCreateDto;
 import com.minsk.pendulum.DTO.user.UserDto;
 import com.minsk.pendulum.DTO.user.UserFullDto;
-import com.minsk.pendulum.converter.UserConverter;
-import com.minsk.pendulum.model.User;
+import com.minsk.pendulum.converter.UserConverterImpl;
 import com.minsk.pendulum.web.AbstractSecurityController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.minsk.pendulum.util.ValidationUtil.assureIdConsistent;
-import static com.minsk.pendulum.util.ValidationUtil.checkNew;
 
 public abstract class AbstractUserController extends AbstractSecurityController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private UserConverter converter;
+    private UserConverterImpl converter;
 
     @Autowired
     private DtoUtils dtoUtils;

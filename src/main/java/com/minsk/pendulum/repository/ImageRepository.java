@@ -11,5 +11,5 @@ public interface ImageRepository {
     // null if not found
     ImageEntity get(int id);
     
-    ImageEntity getByHash(int hash);
+    ImageEntity getByHash(String hash);
 }

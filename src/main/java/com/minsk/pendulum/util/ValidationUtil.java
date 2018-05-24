@@ -2,7 +2,6 @@ package com.minsk.pendulum.util;
 
 
 import com.minsk.pendulum.DTO.AbstractBaseDto;
-import com.minsk.pendulum.model.AbstractBaseEntity;
 import com.minsk.pendulum.util.exception.NotFoundException;
 
 public class ValidationUtil {

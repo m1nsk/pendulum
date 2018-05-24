@@ -21,7 +21,7 @@ public class DataJpaMessageRepositoryImpl implements MessageRepository {
     private CrudMessageRepository messageRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private CrudUserRepository userRepository;
 
     @Autowired
     private CrudChannelRepository channelRepository;
@@ -33,16 +33,13 @@ public class DataJpaMessageRepositoryImpl implements MessageRepository {
     @Transactional
     public Message save(Message message, int userId, int channelId) {
         if (message.isNew()) {
-            Message messageToSave;
-            Channel channel = channelRepository.findById(channelId).orElse(null);
+            Channel channel = channelRepository.getOne(channelId);
             if (channel == null && channel.getUser().getId() != userId) {
                 return null;
             }
-            message.setUser(userRepository.get(userId));
+            message.setUser(userRepository.getOne(userId));
             message.setChannel(channel);
-            messageToSave = messageRepository.save(message);
-            channel.setMessage(message);
-            return messageToSave;
+            return messageRepository.save(message);
         }
         return null;
     }

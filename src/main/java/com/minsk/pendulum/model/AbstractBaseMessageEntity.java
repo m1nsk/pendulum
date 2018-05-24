@@ -10,8 +10,8 @@ public abstract class AbstractBaseMessageEntity {
     public static final int START_SEQ = 100000;
 
     @Id
-    @SequenceGenerator(name = "image_seq", sequenceName = "image_seq", allocationSize = 1, initialValue = START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_seq")
+    @SequenceGenerator(name = "message_seq", sequenceName = "message_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_seq")
     protected Integer id;
 
     protected AbstractBaseMessageEntity() {

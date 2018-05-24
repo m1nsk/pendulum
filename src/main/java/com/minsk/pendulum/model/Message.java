@@ -1,9 +1,16 @@
 package com.minsk.pendulum.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "messages")
 public class Message extends AbstractBaseMessageEntity {
@@ -20,8 +27,14 @@ public class Message extends AbstractBaseMessageEntity {
     @NotNull
     private User user;
 
-    @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    @Column(name = "date", columnDefinition = "timestamp default now()")
+    private Date date = new Date();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "message_image",
+            joinColumns = @JoinColumn(name = "message_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id"))
+    private List<ImageEntity> imageEntities;
 
     public Message() {
     }
@@ -44,37 +57,6 @@ public class Message extends AbstractBaseMessageEntity {
         this.user = user;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Channel getChannel() {
-        return channel;
-    }
-
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {

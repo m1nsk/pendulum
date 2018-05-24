@@ -33,10 +33,10 @@
         <custom-filter before="SECURITY_CONTEXT_FILTER" ref="myFilter" />
     </http>
 
-    <beans:bean id="myFilter" class="com.minsk.pendulum.components.CorsFilter"/>
+    <beans:bean id="myFilter" class="com.minsk.pendulum.security.CorsFilter"/>
 
     <beans:bean id="mySuccessHandler"
-                class="com.minsk.pendulum.components.MySavedRequestAwareAuthenticationSuccessHandler"/>
+                class="com.minsk.pendulum.security.MySavedRequestAwareAuthenticationSuccessHandler"/>
     <beans:bean id="myFailureHandler" class=
             "org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"/>
 

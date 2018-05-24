@@ -1,16 +1,10 @@
 package com.minsk.pendulum.web.user;
 
-import com.minsk.pendulum.DTO.user.UserCreateDto;
 import com.minsk.pendulum.DTO.user.UserDto;
-import com.minsk.pendulum.DTO.user.UserFullDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.minsk.pendulum.AuthorizedUser;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -37,7 +31,7 @@ public class ProfileRestController extends AbstractUserController {
     @DeleteMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete() {
-        super.delete(AuthorizedUser.id());
+        super.delete(authenticationFacade.getUserId());
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

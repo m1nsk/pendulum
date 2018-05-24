@@ -2,14 +2,13 @@ package com.minsk.pendulum.DTO;
 
 import com.minsk.pendulum.DTO.channel.ChannelDto;
 import com.minsk.pendulum.DTO.device.DeviceDto;
+import com.minsk.pendulum.DTO.image.ImageEntityDto;
 import com.minsk.pendulum.DTO.message.MessageDto;
+import com.minsk.pendulum.DTO.message.MessageDtoFull;
 import com.minsk.pendulum.DTO.user.UserCreateDto;
 import com.minsk.pendulum.DTO.user.UserDto;
 import com.minsk.pendulum.DTO.user.UserFullDto;
-import com.minsk.pendulum.model.Channel;
-import com.minsk.pendulum.model.Device;
-import com.minsk.pendulum.model.Message;
-import com.minsk.pendulum.model.User;
+import com.minsk.pendulum.model.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +31,16 @@ public class DtoUtils {
         return user;
     }
 
+    public ImageEntityDto convertToDto(ImageEntity imageEntity) {
+        ImageEntityDto imageEntityDto = modelMapper.map(imageEntity, ImageEntityDto.class);
+        return imageEntityDto;
+    }
+
+    public ImageEntity convertToEntity(ImageEntityDto imageEntityDto){
+        ImageEntity imageEntity = modelMapper.map(imageEntityDto, ImageEntity.class);
+        return imageEntity;
+    }
+
     public User convertToEntity(UserCreateDto userCreateDto){
         User user = modelMapper.map(userCreateDto, User.class);
         return user;
@@ -42,7 +51,7 @@ public class DtoUtils {
         return messageDto;
     }
 
-    public Message convertToEntity(MessageDto messageDto){
+    public Message convertToEntity(MessageDtoFull messageDto){
         Message message = modelMapper.map(messageDto, Message.class);
         return message;
     }

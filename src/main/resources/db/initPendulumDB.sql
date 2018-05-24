@@ -1,12 +1,14 @@
 DROP TABLE IF EXISTS user_roles;
-DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS message_image;
 DROP TABLE IF EXISTS channel_device;
+DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS channels;
 DROP TABLE IF EXISTS devices;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS images;
 DROP SEQUENCE IF EXISTS global_seq;
 DROP SEQUENCE IF EXISTS message_seq;
+DROP SEQUENCE IF EXISTS image_seq;
 
 CREATE SEQUENCE global_seq START 100000;
 CREATE SEQUENCE message_seq START 100000;
@@ -56,7 +58,7 @@ CREATE TABLE messages
   message     VARCHAR(1000)   NOT NULL,
   channel_id  INTEGER NOT NULL,
   user_id     INTEGER NOT NULL,
-  date        TIMESTAMP DEFAULT now() NOT NULL,
+  date        TIMESTAMP DEFAULT NOW(),
   FOREIGN KEY (channel_id) REFERENCES channels (id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
@@ -71,6 +73,15 @@ CREATE TABLE channel_device (
 
 CREATE TABLE images (
   id               INTEGER PRIMARY KEY DEFAULT nextval('image_seq'),
-  hash             INTEGER                 NOT NULL,
+  hash             VARCHAR                 NOT NULL,
   file_path        VARCHAR                 NOT NULL
+);
+
+
+CREATE TABLE message_image (
+  message_id  INTEGER NOT NULL,
+  image_id    INTEGER NOT NULL,
+  PRIMARY KEY (message_id, image_id),
+  FOREIGN KEY (message_id) REFERENCES messages (id) ON DELETE CASCADE,
+  FOREIGN KEY (image_id) REFERENCES images (id) ON DELETE CASCADE
 );

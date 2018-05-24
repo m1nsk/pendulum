@@ -1,7 +1,7 @@
 package com.minsk.pendulum.web.device;
 
 import com.minsk.pendulum.DTO.device.DeviceDto;
-import com.minsk.pendulum.converter.DeviceConverter;
+import com.minsk.pendulum.converter.DeviceConverterImpl;
 import com.minsk.pendulum.util.exception.NotFoundException;
 import com.minsk.pendulum.web.AbstractSecurityController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import static com.minsk.pendulum.util.ValidationUtil.checkNew;
 public class AbstractDeviceRestController extends AbstractSecurityController {
 
     @Autowired
-    private DeviceConverter converter;
+    private DeviceConverterImpl converter;
 
     public DeviceDto create(DeviceDto deviceDto) {
         checkNew(deviceDto);

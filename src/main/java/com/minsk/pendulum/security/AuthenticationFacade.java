@@ -1,6 +1,5 @@
-package com.minsk.pendulum.components;
+package com.minsk.pendulum.security;
 
-import com.minsk.pendulum.service.customService.MyUserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
